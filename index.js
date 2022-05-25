@@ -31,9 +31,8 @@ server.listen(PORT, () => {
 
 io.on('connection', (socket) => {
     socket.on('location', (coordinations) => {
-        console.log(coordinations.latitude)
-        console.log(coordinations.longitude)
-    })
+        getClosestChargingStation(coordinations);
+    });
 });
 
 const groupBy = (items, prop) => {
@@ -43,11 +42,15 @@ const groupBy = (items, prop) => {
         out[value].push(item);
         return out;
     }, {});
-};
+}
+
+async function getClosestChargingStation(coordinations) {
+    console.log(coordinations)
+}
 
 async function getData() {
     const query = `from(bucket: "providers")
-    |> range(start: -28h, stop: -24h)
+    |> range(start: -28h, stop: -27h)
     |> filter(fn: (r) => r["_measurement"] == "past_providers")`;
 
     // const query = `from(bucket: "elmap")
@@ -70,4 +73,4 @@ async function getData() {
         return [];
     }
 }
-getData()
+getData();
