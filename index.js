@@ -65,8 +65,7 @@ async function getData() {
 
     try {
         const rows = await queryApi.collectRows(query);
-        const data = Object.entries(groupBy(rows, "_field"));
-        // data.forEach(d => console.log(d))
+        const data = groupBy(rows, "_field");
         return data;
     } catch (error) {
         console.error(error);
