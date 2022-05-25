@@ -1,11 +1,12 @@
 const socket = io();
+const div = document.querySelector('#location');
+const chargingStationsUl = document.querySelector('#charging_stations');
 
-var div = document.getElementById("location");
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        div.innerHTML = "The Browser Does not Support Geolocation";
+        div.innerHTML = 'The Browser Does not Support Geolocation';
     }
 }
 
@@ -13,12 +14,21 @@ function showPosition(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     socket.emit('location', { latitude, longitude })
-    div.innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    div.innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
 }
 
 function showError(error) {
     if (error.PERMISSION_DENIED) {
-        div.innerHTML = "The User have denied the request for Geolocation.";
+        div.innerHTML = 'The User have denied the request for Geolocation.';
     }
 }
 getLocation();
+
+socket.on('fill-in-data', data => {
+    data.forEach(d => {
+        let chargingStation = document.createElement('li');
+        chargingStation.innerHTML = d.operatorName;
+        chargingStationsUl.appendChild(chargingStation);
+        // console.log(d)
+    })
+})

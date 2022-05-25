@@ -49,7 +49,7 @@ async function getClosestChargingStation(coordinations) {
     const latitude = coordinations.latitude;
     const longitude = coordinations.longitude;
 
-    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.04}/${longitude + 0.04}/${latitude - 0.04}/${latitude + 0.04}/15`;
+    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.03}/${longitude + 0.03}/${latitude - 0.03}/${latitude + 0.03}/15`;
     let dataSet = null;
 
     await fetch(url)
@@ -57,10 +57,11 @@ async function getClosestChargingStation(coordinations) {
         .then(data => dataSet = data)
         .catch(err => console.log(err))
 
-    console.log(dataSet)
+    const availableStations = dataSet.filter(data => {
+        return data.status == 'Available'
+    });
 
-    console.log(coordinations.latitude);
-    console.log(coordinations.longitude)
+    io.emit('fill-in-data', availableStations)
 }
 
 async function getData() {
