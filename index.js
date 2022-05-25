@@ -5,6 +5,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
+const fetch = require('node-fetch')
 
 const InfluxDatabase = require('@influxdata/influxdb-client');
 const InfluxDB = InfluxDatabase.InfluxDB;
@@ -45,7 +46,21 @@ const groupBy = (items, prop) => {
 }
 
 async function getClosestChargingStation(coordinations) {
-    console.log(coordinations)
+    const latitude = coordinations.latitude;
+    const longitude = coordinations.longitude;
+
+    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.04}/${longitude + 0.04}/${latitude - 0.04}/${latitude + 0.04}/15`;
+    let dataSet = null;
+
+    await fetch(url)
+        .then(res => res.json())
+        .then(data => dataSet = data)
+        .catch(err => console.log(err))
+
+    console.log(dataSet)
+
+    console.log(coordinations.latitude);
+    console.log(coordinations.longitude)
 }
 
 async function getData() {
@@ -73,3 +88,4 @@ async function getData() {
     }
 }
 getData();
+
