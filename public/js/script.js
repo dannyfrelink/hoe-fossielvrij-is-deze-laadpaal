@@ -2,7 +2,7 @@ const socket = io();
 const div = document.querySelector('#location');
 const chargingStationsUl = document.querySelector('#charging_stations');
 
-function getLocation() {
+const getLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
@@ -10,14 +10,14 @@ function getLocation() {
     }
 }
 
-function showPosition(position) {
+const showPosition = position => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     socket.emit('location', { latitude, longitude })
     div.innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
 }
 
-function showError(error) {
+const showError = error => {
     if (error.PERMISSION_DENIED) {
         div.innerHTML = 'The User have denied the request for Geolocation.';
     }
