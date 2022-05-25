@@ -1,0 +1,20 @@
+:root {
+    --background-color: #080D55;
+    --secondary-color: #02958A;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background-color);
+    z-index: -1;
+}
+
+body {
+    font-family: roc-grotesk, sans-serif;
+    color: white;
+}
