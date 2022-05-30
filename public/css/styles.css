@@ -18,3 +18,10 @@ body {
     font-family: roc-grotesk, sans-serif;
     color: white;
 }
+
+#loader article {
+    width: 85vw;
+    height: 20vw;
+    background-color: grey;
+    margin: 0 auto 3vw;
+}

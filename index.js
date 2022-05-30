@@ -18,25 +18,20 @@ const queryApi = client.getQueryApi(INFLUXDB_ORG);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-    res.render('home')
-});
-
-app.use((req, res) => {
-    res.status(404).send('Sorry, deze pagina kon ik niet vinden.');
-});
-
-server.listen(PORT, () => {
-    console.log(`Listening on port: ${PORT}`);
-});
-
 io.on('connection', (socket) => {
     socket.on('location', async (coordinations) => {
         const stations = await getClosestChargingStation(coordinations);
-        const sortedStations = await groupBy(stations, 'operatorName');
-        console.log(sortedStations)
+        sortedStations = await groupBy(stations, 'operatorName');
+        // console.log(sortedStations)
     });
 });
+
+let sortedStations = null;
+
+app.get('/', async (req, res) => {
+    res.render('home')
+});
+
 
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
@@ -53,6 +48,8 @@ const getClosestChargingStation = async (coordinations) => {
 
     const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.03}/${longitude + 0.03}/${latitude - 0.03}/${latitude + 0.03}/15`;
     let dataSet = null;
+
+
 
     await fetch(url)
         .then(res => res.json())
@@ -93,3 +90,10 @@ async function getData() {
 }
 getData();
 
+app.use((req, res) => {
+    res.status(404).send('Sorry, deze pagina kon ik niet vinden.');
+});
+
+server.listen(PORT, () => {
+    console.log(`Listening on port: ${PORT}`);
+});
