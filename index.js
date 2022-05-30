@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
     res.render('home')
-})
+});
 
 app.use((req, res) => {
     res.status(404).send('Sorry, deze pagina kon ik niet vinden.');
@@ -31,8 +31,10 @@ server.listen(PORT, () => {
 });
 
 io.on('connection', (socket) => {
-    socket.on('location', (coordinations) => {
-        getClosestChargingStation(coordinations);
+    socket.on('location', async (coordinations) => {
+        const stations = await getClosestChargingStation(coordinations);
+        const sortedStations = await groupBy(stations, 'operatorName');
+        console.log(sortedStations)
     });
 });
 
@@ -45,7 +47,7 @@ const groupBy = (items, prop) => {
     }, {});
 }
 
-async function getClosestChargingStation(coordinations) {
+const getClosestChargingStation = async (coordinations) => {
     const latitude = coordinations.latitude;
     const longitude = coordinations.longitude;
 
@@ -61,7 +63,8 @@ async function getClosestChargingStation(coordinations) {
         return data.status == 'Available'
     });
 
-    io.emit('fill-in-data', availableStations)
+    io.emit('fill-in-data', availableStations);
+    return availableStations;
 }
 
 async function getData() {
