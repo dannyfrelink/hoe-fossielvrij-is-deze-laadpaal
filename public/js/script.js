@@ -14,7 +14,7 @@ const showPosition = position => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     socket.emit('location', { latitude, longitude })
-    div.innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
+    // div.innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
 }
 
 const showError = error => {
