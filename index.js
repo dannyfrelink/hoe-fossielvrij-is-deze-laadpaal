@@ -18,15 +18,21 @@ const queryApi = client.getQueryApi(INFLUXDB_ORG);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+// let sortedStations = null;
+
 io.on('connection', (socket) => {
     socket.on('location', async (coordinations) => {
         const stations = await getClosestChargingStation(coordinations);
-        sortedStations = await groupBy(stations, 'operatorName');
-        // console.log(sortedStations)
+        const sortedStations = await groupBy(stations, 'operatorName');
+
+        const energySupplierEmission = await getData();
+        const sortedEnergySuppliers = Object.entries(energySupplierEmission)
+            .sort(([, a], [, b]) => a._value - b._value)
+
+        io.emit('fill-in-data', sortedStations);
     });
 });
 
-let sortedStations = null;
 
 app.get('/', async (req, res) => {
     res.render('home')
@@ -36,8 +42,13 @@ app.get('/', async (req, res) => {
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
         const value = item[prop];
-        out[value] = out[value] || [];
-        out[value].push(item);
+        if (prop == 'operatorName') {
+            out[value] = out[value] || [];
+            out[value].push(item);
+        } else {
+            out[value] = item;
+        }
+
         return out;
     }, {});
 }
@@ -59,8 +70,6 @@ const getClosestChargingStation = async (coordinations) => {
     const availableStations = dataSet.filter(data => {
         return data.status == 'Available'
     });
-
-    io.emit('fill-in-data', availableStations);
     return availableStations;
 }
 
@@ -88,7 +97,6 @@ async function getData() {
         return [];
     }
 }
-getData();
 
 app.use((req, res) => {
     res.status(404).send('Sorry, deze pagina kon ik niet vinden.');

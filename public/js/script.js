@@ -26,10 +26,11 @@ const showError = error => {
 getLocation();
 
 socket.on('fill-in-data', data => {
-    data.forEach(d => {
-        let chargingStation = document.createElement('li');
-        chargingStation.innerHTML = d.operatorName;
-        chargingStationsUl.appendChild(chargingStation);
-        loaderSection.classList.add('hidden');
-    })
+    loaderSection.classList.add('hidden');
+    // data.forEach(d => {
+    //     let chargingStation = document.createElement('li');
+    //     chargingStation.innerHTML = d.operatorName;
+    //     chargingStationsUl.appendChild(chargingStation);
+
+    // })
 })
