@@ -1,6 +1,7 @@
 const socket = io();
 const div = document.querySelector('#location');
 const chargingStationsUl = document.querySelector('#charging_stations');
+const loaderSection = document.querySelector('#loader');
 
 const getLocation = () => {
     if (navigator.geolocation) {
@@ -29,6 +30,6 @@ socket.on('fill-in-data', data => {
         let chargingStation = document.createElement('li');
         chargingStation.innerHTML = d.operatorName;
         chargingStationsUl.appendChild(chargingStation);
-        // console.log(d)
+        loaderSection.classList.add('hidden');
     })
 })

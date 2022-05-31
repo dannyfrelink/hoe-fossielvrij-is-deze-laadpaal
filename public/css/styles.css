@@ -18,12 +18,17 @@ body::before {
 body {
     font-family: roc-grotesk, sans-serif;
     color: white;
+    width: 85vw;
+    margin: auto;
 }
 
 article {
-    width: 85vw;
     height: 20vw;
     background-color: var(--overlay-background-color);
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-    margin: 0 auto 3vw;
+    margin-bottom: 3vw;
+}
+
+.hidden {
+    display: none;
 }
