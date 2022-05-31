@@ -99,7 +99,7 @@ async function getData() {
 }
 
 app.use((req, res) => {
-    res.status(404).send('Sorry, deze pagina kon ik niet vinden.');
+    res.status(404).send('Sorry, could not find the page you were looking for.');
 });
 
 server.listen(PORT, () => {
