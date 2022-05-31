@@ -37,8 +37,8 @@ io.on('connection', (socket) => {
                 lat2 = v.coordinates.latitude;
                 lon2 = v.coordinates.longitude;
 
-                console.log(v.authorizationMethods)
-                v.locationUid = await distance(lat1, lat2, lon1, lon2)
+                v.locationUid = await distance(lat1, lat2, lon1, lon2);
+                console.log(v)
 
                 // setTimeout(() => {
                 //     v.then(d => console.log(d))
@@ -101,7 +101,7 @@ const getClosestChargingStation = async (coordinates) => {
     const latitude = coordinates.latitude;
     const longitude = coordinates.longitude;
 
-    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.03}/${longitude + 0.03}/${latitude - 0.03}/${latitude + 0.03}/15`;
+    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.0055}/${longitude + 0.0055}/${latitude - 0.0055}/${latitude + 0.0055}/15`;
     let dataSet = null;
 
     await fetch(url)
@@ -150,7 +150,7 @@ const distance = (lat1, lat2, lon1, lon2) => {
     let r = 6371000;
 
     // calculate the result
-    return (c * r);
+    return (Math.round(c * r));
 }
 
 app.use((req, res) => {
