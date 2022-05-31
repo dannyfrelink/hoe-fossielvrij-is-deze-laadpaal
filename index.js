@@ -31,11 +31,9 @@ io.on('connection', (socket) => {
     });
 });
 
-
 app.get('/', async (req, res) => {
     res.render('home')
 });
-
 
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
