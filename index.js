@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
                 lat2 = v.coordinates.latitude;
                 lon2 = v.coordinates.longitude;
 
-                // console.log(v.locationUid)
+                console.log(v.authorizationMethods)
                 v.locationUid = await distance(lat1, lat2, lon1, lon2)
 
                 // setTimeout(() => {
@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
             // return value;
         });
 
-        console.log(test)
+        // console.log(sortedStations)
 
         // const b = test.map(tes => {
         //     return tes.map(t => {

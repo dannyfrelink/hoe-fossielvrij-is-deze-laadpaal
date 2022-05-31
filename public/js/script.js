@@ -1,6 +1,6 @@
 const socket = io();
 const div = document.querySelector('#location');
-const chargingStationsUl = document.querySelector('#charging_stations');
+const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
 
 const getLocation = () => {
@@ -26,6 +26,7 @@ const showError = error => {
 getLocation();
 
 socket.on('fill-in-data', data => {
+    chargingStations.classList.remove('hidden')
     loaderSection.classList.add('hidden');
     // data.forEach(d => {
     //     let chargingStation = document.createElement('li');
