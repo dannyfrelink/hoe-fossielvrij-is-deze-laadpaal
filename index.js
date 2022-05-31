@@ -26,7 +26,9 @@ io.on('connection', (socket) => {
         const energySupplierEmission = await getData();
         const sortedEnergySuppliers = Object.entries(energySupplierEmission)
             .sort(([, a], [, b]) => a._value - b._value)
-            .map(supplier => `${supplier[0]} = ${supplier[1]._value}`);
+            .map(supplier => [supplier[0], supplier[1]._value]);
+
+        console.log(sortedEnergySuppliers)
 
         io.emit('fill-in-data', sortedStations);
     });
