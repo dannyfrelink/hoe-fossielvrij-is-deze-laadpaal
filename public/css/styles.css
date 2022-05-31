@@ -19,7 +19,7 @@ body {
     font-family: roc-grotesk, sans-serif;
     color: white;
     width: 85vw;
-    margin: auto;
+    margin: 2rem auto;
 }
 
 a {
@@ -29,9 +29,7 @@ a {
     color: white;
     height: 5rem;
     background-color: var(--overlay-background-color);
-    /* box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2); */
     box-shadow: 0px 1px 5px var(--overlay-background-color);
-    /* border: 1px solid var(--background-color); */
     margin-bottom: 3vw;
     border-radius: 0.35em;
 }
