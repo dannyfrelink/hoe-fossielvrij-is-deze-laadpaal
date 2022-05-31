@@ -18,8 +18,6 @@ const queryApi = client.getQueryApi(INFLUXDB_ORG);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-// let sortedStations = null;
-
 io.on('connection', (socket) => {
     socket.on('location', async (coordinations) => {
         const stations = await getClosestChargingStation(coordinations);
@@ -60,8 +58,6 @@ const getClosestChargingStation = async (coordinations) => {
     const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.03}/${longitude + 0.03}/${latitude - 0.03}/${latitude + 0.03}/15`;
     let dataSet = null;
 
-
-
     await fetch(url)
         .then(res => res.json())
         .then(data => dataSet = data)
@@ -77,16 +73,6 @@ async function getData() {
     const query = `from(bucket: "providers")
     |> range(start: -28h, stop: -27h)
     |> filter(fn: (r) => r["_measurement"] == "past_providers")`;
-
-    // const query = `from(bucket: "elmap")
-    // |> range(start: now(), stop: 48h)
-    // |> filter(fn: (r) => r["_measurement"] == "forecast")
-    // |> filter(fn: (r) => r["kind"] == "powerConsumptionBreakdown")
-    // |> filter(fn: (r) => r["zone"] == "NL")
-    // |> filter(fn: (r) => r["timeoffset"] == "baseline")
-    // |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
-    // |> sort(columns: ["_time"], desc: false)
-    // |> yield(name: "mean")`;
 
     try {
         const rows = await queryApi.collectRows(query);
