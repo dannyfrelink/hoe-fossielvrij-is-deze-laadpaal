@@ -33,4 +33,6 @@ socket.on('fill-in-data', data => {
     //     chargingStationsUl.appendChild(chargingStation);
 
     // })
-})
+});
+
+        // http://www.google.com/maps/place/52.5089142,4.7724513
