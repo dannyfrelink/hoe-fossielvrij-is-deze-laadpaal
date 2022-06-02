@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 let users = {}
 
 io.on('connection', (socket) => {
-    users[socket.id] = Math.floor(Math.random() * 1000000);
+    users[socket.id] = Math.floor(Math.random() * 10000000);
     socket.join(users[socket.id]);
 
     socket.on('location', async (coordinates) => {
