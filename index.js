@@ -21,37 +21,21 @@ app.set('view engine', 'ejs');
 io.on('connection', (socket) => {
     socket.on('location', async (coordinates) => {
         const stations = await getClosestChargingStation(coordinates);
+        const renamedStations = await renameOperatorStations(stations);
         const sortedStations = await groupBy(stations, 'operatorName');
+        const distancedStations = await getDistanceToStation(sortedStations, coordinates);
+
+        Promise.all(distancedStations).then(stations => {
+            stations.map(station => console.log(station))
+        });
+        // console.log(distancedStations)
 
         const energySupplierEmission = await getData();
         const sortedEnergySuppliers = Object.entries(energySupplierEmission)
             .sort(([, a], [, b]) => a._value - b._value)
             .map(supplier => [supplier[0], supplier[1]._value]);
 
-        const lat1 = coordinates.latitude;
-        const lon1 = coordinates.longitude;
-        let lat2;
-        let lon2;
-        const test = Object.values(sortedStations).map(value => {
-            return value.map(async (v) => {
-                lat2 = v.coordinates.latitude;
-                lon2 = v.coordinates.longitude;
 
-                v.locationUid = await distance(lat1, lat2, lon1, lon2);
-                console.log(v)
-
-                // setTimeout(() => {
-                //     v.then(d => console.log(d))
-                // }, 10000)
-
-                return v;
-
-                // console.log(v.coordinates);
-            });
-            // return value;
-        });
-
-        // console.log(sortedStations)
 
         // const b = test.map(tes => {
         //     return tes.map(t => {
@@ -115,7 +99,48 @@ const getClosestChargingStation = async (coordinates) => {
     return availableStations;
 }
 
-async function getData() {
+const getDistanceToStation = (sortedStations, coordinates) => {
+    const lat1 = coordinates.latitude;
+    const lon1 = coordinates.longitude;
+    let lat2;
+    let lon2;
+
+    return Object.values(sortedStations).map(values => {
+        return values.map(async (value) => {
+            lat2 = value.coordinates.latitude;
+            lon2 = value.coordinates.longitude;
+
+            value['distance'] = value['locationUid'];
+            delete value['locationUid'];
+
+            // console.log(value)
+
+            value.distance = await distance(lat1, lat2, lon1, lon2);
+
+            // console.log(value)
+
+            // setTimeout(() => {
+            //     value.then(d => console.log(d))
+            // }, 10000)
+
+            return value;
+
+            // console.log(v.coordinates);
+        });
+        // console.log(values)
+        // Promise.all(values).then(d => {
+        //     return d
+        // });
+        // console.log(test2)
+        // return values;
+    });
+}
+
+const renameOperatorStations = stations => {
+    console.log(stations)
+}
+
+const getData = async () => {
     const query = `from(bucket: "providers")
     |> range(start: -28h, stop: -27h)
     |> filter(fn: (r) => r["_measurement"] == "past_providers")`;
@@ -130,8 +155,9 @@ async function getData() {
     }
 }
 
+// Resource: https://www.geeksforgeeks.org/program-distance-two-points-earth/#:%7E:text=For%20this%20divide%20the%20values,is%20the%20radius%20of%20Earth.
 const distance = (lat1, lat2, lon1, lon2) => {
-    // The math module contains a functionnamed to Radians which converts from degrees to radians.
+    // The math module contains a function named to Radians which converts from degrees to radians.
     lon1 = lon1 * Math.PI / 180;
     lon2 = lon2 * Math.PI / 180;
     lat1 = lat1 * Math.PI / 180;
@@ -149,7 +175,7 @@ const distance = (lat1, lat2, lon1, lon2) => {
     // Radius of earth in meters. Use 3956 for miles
     let r = 6371000;
 
-    // calculate the result
+    // Calculate the result
     return (Math.round(c * r));
 }
 
