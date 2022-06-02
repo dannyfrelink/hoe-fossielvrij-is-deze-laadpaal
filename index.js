@@ -28,15 +28,11 @@ io.on('connection', (socket) => {
             sortedStations = await groupBy(stations, 'operatorName');
         });
 
-        // console.log(sortedStations)
-
         const energySupplierEmission = await getData();
         const sortedEnergySuppliers = sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
-        console.log(nearbyStationsPerSupplier)
-
-        io.emit('fill-in-data', sortedStations);
+        io.emit('fill-in-data', nearbyStationsPerSupplier);
     });
 });
 
