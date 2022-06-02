@@ -21,33 +21,19 @@ app.set('view engine', 'ejs');
 io.on('connection', (socket) => {
     socket.on('location', async (coordinates) => {
         const stations = await getClosestChargingStation(coordinates);
-        const renamedStations = await renameOperatorStations(stations);
-        const sortedStations = await groupBy(stations, 'operatorName');
-        const distancedStations = await getDistanceToStation(sortedStations, coordinates);
-
-        Promise.all(distancedStations).then(stations => {
-            stations.map(station => console.log(station))
+        // const renamedStations = await renameOperatorStations(stations);
+        const distancedStations = await getDistanceToStation(stations, coordinates);
+        let sortedStations;
+        await Promise.all(distancedStations).then(async (stations) => {
+            sortedStations = await groupBy(stations, 'operatorName');
         });
-        // console.log(distancedStations)
+
+        // console.log(sortedStations)
 
         const energySupplierEmission = await getData();
         const sortedEnergySuppliers = Object.entries(energySupplierEmission)
             .sort(([, a], [, b]) => a._value - b._value)
             .map(supplier => [supplier[0], supplier[1]._value]);
-
-
-
-        // const b = test.map(tes => {
-        //     return tes.map(t => {
-        //         return t.then(k => {
-        //             return k
-        //         })
-        //     })
-        // })
-
-        // setTimeout(() => {
-        //     test.then(d => console.log(d))
-        // }, 10000)
 
 
 
@@ -99,46 +85,41 @@ const getClosestChargingStation = async (coordinates) => {
     return availableStations;
 }
 
-const getDistanceToStation = (sortedStations, coordinates) => {
+const getDistanceToStation = (stations, coordinates) => {
     const lat1 = coordinates.latitude;
     const lon1 = coordinates.longitude;
     let lat2;
     let lon2;
 
-    return Object.values(sortedStations).map(values => {
-        return values.map(async (value) => {
-            lat2 = value.coordinates.latitude;
-            lon2 = value.coordinates.longitude;
+    return stations.map(async (station) => {
+        lat2 = station.coordinates.latitude;
+        lon2 = station.coordinates.longitude;
 
-            value['distance'] = value['locationUid'];
-            delete value['locationUid'];
+        station['distance'] = station['locationUid'];
+        delete station['locationUid'];
+        station.distance = await distance(lat1, lat2, lon1, lon2);
 
-            // console.log(value)
+        return station;
+    })
 
-            value.distance = await distance(lat1, lat2, lon1, lon2);
 
-            // console.log(value)
+    // return Object.values(sortedStations).map(values => {
+    //     return values.map(async (value) => {
+    //         lat2 = value.coordinates.latitude;
+    //         lon2 = value.coordinates.longitude;
 
-            // setTimeout(() => {
-            //     value.then(d => console.log(d))
-            // }, 10000)
+    //         value['distance'] = value['locationUid'];
+    //         delete value['locationUid'];
+    //         value.distance = await distance(lat1, lat2, lon1, lon2);
 
-            return value;
-
-            // console.log(v.coordinates);
-        });
-        // console.log(values)
-        // Promise.all(values).then(d => {
-        //     return d
-        // });
-        // console.log(test2)
-        // return values;
-    });
+    //         return value;
+    //     });
+    // });
 }
 
-const renameOperatorStations = stations => {
-    console.log(stations)
-}
+// const renameOperatorStations = stations => {
+//     console.log(stations)
+// }
 
 const getData = async () => {
     const query = `from(bucket: "providers")
