@@ -21,20 +21,10 @@ app.set('view engine', 'ejs');
 let users = {}
 
 io.on('connection', (socket) => {
-    // users[socket.id] = 'id';
-    socket.on('disconnect', () => {
-        delete users[socket.id];
-    });
+    users[socket.id] = Math.floor(Math.random() * 1000000);
+    socket.join(users[socket.id]);
 
     socket.on('location', async (coordinates) => {
-        users[coordinates.id] = {
-            'latitude': coordinates.latitude,
-            'longitude': coordinates.longitude,
-            'room': coordinates.room
-        }
-
-        socket.join(users[socket.id].room);
-
         const stations = await getClosestChargingStation(coordinates);
         const renamedStations = await renameOperatorStations(stations);
         const distancedStations = await getDistanceToStation(renamedStations, coordinates);
@@ -47,8 +37,11 @@ io.on('connection', (socket) => {
         const sortedEnergySuppliers = await sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
-        io.to(users[socket.id].room).emit('fill-in-data', nearbyStationsPerSupplier);
-        // io.emit('fill-in-data', nearbyStationsPerSupplier);
+        io.to(users[socket.id]).emit('fill-in-data', nearbyStationsPerSupplier);
+    });
+
+    socket.on('disconnect', () => {
+        delete users[socket.id];
     });
 });
 

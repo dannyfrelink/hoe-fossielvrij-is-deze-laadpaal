@@ -15,12 +15,7 @@ const getLocation = () => {
 const showPosition = position => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    socket.emit('location', {
-        latitude,
-        longitude,
-        'id': socket.id,
-        'room': Math.floor(Math.random() * 1000000)
-    });
+    socket.emit('location', { latitude, longitude });
     // errorMessage.textContent = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
 }
 
