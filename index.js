@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
         });
 
         const energySupplierEmission = await getData();
-        const sortedEnergySuppliers = sortEnergySuppliers(energySupplierEmission)
+        const sortedEnergySuppliers = await sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
         io.emit('fill-in-data', nearbyStationsPerSupplier);
@@ -70,6 +70,30 @@ const getClosestChargingStation = async (coordinates) => {
         return data.status == 'Available'
     });
     return availableStations;
+}
+
+// Resource: https://www.geeksforgeeks.org/program-distance-two-points-earth/#:%7E:text=For%20this%20divide%20the%20values,is%20the%20radius%20of%20Earth.
+const distance = (lat1, lat2, lon1, lon2) => {
+    // The math module contains a function named to Radians which converts from degrees to radians.
+    lon1 = lon1 * Math.PI / 180;
+    lon2 = lon2 * Math.PI / 180;
+    lat1 = lat1 * Math.PI / 180;
+    lat2 = lat2 * Math.PI / 180;
+
+    // Haversine formula
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+    let a = Math.pow(Math.sin(dlat / 2), 2)
+        + Math.cos(lat1) * Math.cos(lat2)
+        * Math.pow(Math.sin(dlon / 2), 2);
+
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    // Radius of earth in meters. Use 3956 for miles
+    let r = 6371000;
+
+    // Calculate the result
+    return (Math.round(c * r));
 }
 
 const getDistanceToStation = (stations, coordinates) => {
@@ -125,30 +149,6 @@ const getData = async () => {
         console.error(error);
         return [];
     }
-}
-
-// Resource: https://www.geeksforgeeks.org/program-distance-two-points-earth/#:%7E:text=For%20this%20divide%20the%20values,is%20the%20radius%20of%20Earth.
-const distance = (lat1, lat2, lon1, lon2) => {
-    // The math module contains a function named to Radians which converts from degrees to radians.
-    lon1 = lon1 * Math.PI / 180;
-    lon2 = lon2 * Math.PI / 180;
-    lat1 = lat1 * Math.PI / 180;
-    lat2 = lat2 * Math.PI / 180;
-
-    // Haversine formula
-    let dlon = lon2 - lon1;
-    let dlat = lat2 - lat1;
-    let a = Math.pow(Math.sin(dlat / 2), 2)
-        + Math.cos(lat1) * Math.cos(lat2)
-        * Math.pow(Math.sin(dlon / 2), 2);
-
-    let c = 2 * Math.asin(Math.sqrt(a));
-
-    // Radius of earth in meters. Use 3956 for miles
-    let r = 6371000;
-
-    // Calculate the result
-    return (Math.round(c * r));
 }
 
 const sortEnergySuppliers = suppliers => {
