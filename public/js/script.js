@@ -28,7 +28,6 @@ const showError = error => {
 getLocation();
 
 socket.on('fill-in-data', stations => {
-    console.log('test')
     chargingStations.classList.remove('hidden')
     loaderSection.classList.add('hidden');
 
