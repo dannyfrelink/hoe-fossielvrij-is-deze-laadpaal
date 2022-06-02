@@ -25,15 +25,45 @@ const showError = error => {
 }
 getLocation();
 
-socket.on('fill-in-data', data => {
+socket.on('fill-in-data', stations => {
     chargingStations.classList.remove('hidden')
     loaderSection.classList.add('hidden');
-    // data.forEach(d => {
-    //     let chargingStation = document.createElement('li');
-    //     chargingStation.innerHTML = d.operatorName;
-    //     chargingStationsUl.appendChild(chargingStation);
 
-    // })
+    stations.map(station => {
+        Object.keys(station).map(operator => {
+            station[operator].stations.map(stat => {
+                let latitude = stat.coordinates.latitude;
+                let longitude = stat.coordinates.longitude;
+
+                // Create each charging station
+                let chargingStation = document.createElement('a');
+                chargingStation.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
+                chargingStation.setAttribute('target', '_blank');
+
+                // Create content of each charging station
+                let distanceText = document.createElement('h2');
+                distanceText.textContent = `${stat.distance} meters`;
+                let operatorText = document.createElement('p');
+                operatorText.textContent = stat.operatorName;
+                let sustainabilityScore = document.createElement('p');
+                sustainabilityScore.textContent = 'Sustainability score: ';
+                let sustainabilityValue = station[operator].value;
+                if (sustainabilityValue <= 150) {
+                    sustainabilityScore.classList.add('good_sustainability')
+                } else if (sustainabilityValue > 150 && sustainabilityValue <= 250) {
+                    sustainabilityScore.classList.add('decent_sustainability')
+                } else if (sustainabilityValue > 250 && sustainabilityValue <= 350) {
+                    sustainabilityScore.classList.add('bad_sustainability')
+                } else if (sustainabilityValue > 350) {
+                    sustainabilityScore.classList.add('terrible_sustainability')
+                }
+                let button = document.createElement('button');
+
+                // Append children
+                chargingStation.append(distanceText, operatorText, sustainabilityScore, button);
+                chargingStations.appendChild(chargingStation);
+            })
+
+        })
+    });
 });
-
-        // http://www.google.com/maps/place/52.5089142,4.7724513
