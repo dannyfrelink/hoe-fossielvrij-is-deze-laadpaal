@@ -6,9 +6,25 @@
 </head>
 
 <body>
-    <h1>Sustainable Charge</h1>
-    <div id="location"></div>
-    <!-- <ul id="charging_stations"></ul> -->
+    <header>
+        <h1>Sustainable Charge</h1>
+        <label for="radius">Radius:</label>
+        <select name="radius" id="radius">
+            <option value="250">250 meters</option>
+            <option value="500">500 meters</option>
+            <option value="1000">1000 meters</option>
+            <option value="1500">1500 meters</option>
+        </select>
+    </header>
+
+
+
+
+
+    <p class="hidden" id="error_message"></p>
+
+
+
     <section id="loader">
         <a></a>
         <a></a>

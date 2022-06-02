@@ -1,5 +1,5 @@
 const socket = io();
-const div = document.querySelector('#location');
+const errorMessage = document.querySelector('#error_message');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
 
@@ -7,7 +7,8 @@ const getLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        div.innerHTML = 'The Browser Does not Support Geolocation';
+        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = 'The Browser Does not Support Geolocation';
     }
 }
 
@@ -15,12 +16,13 @@ const showPosition = position => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     socket.emit('location', { latitude, longitude })
-    // div.innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
+    // errorMessage.textContent = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
 }
 
 const showError = error => {
     if (error.PERMISSION_DENIED) {
-        div.innerHTML = 'The User have denied the request for Geolocation.';
+        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = 'The User have denied the request for Geolocation.';
     }
 }
 getLocation();
