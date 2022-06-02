@@ -21,8 +21,8 @@ app.set('view engine', 'ejs');
 io.on('connection', (socket) => {
     socket.on('location', async (coordinates) => {
         const stations = await getClosestChargingStation(coordinates);
-        // const renamedStations = await renameOperatorStations(stations);
-        const distancedStations = await getDistanceToStation(stations, coordinates);
+        const renamedStations = await renameOperatorStations(stations);
+        const distancedStations = await getDistanceToStation(renamedStations, coordinates);
         let sortedStations;
         await Promise.all(distancedStations).then(async (stations) => {
             sortedStations = await groupBy(stations, 'operatorName');
@@ -31,19 +31,10 @@ io.on('connection', (socket) => {
         // console.log(sortedStations)
 
         const energySupplierEmission = await getData();
-        const sortedEnergySuppliers = Object.entries(energySupplierEmission)
-            .sort(([, a], [, b]) => a._value - b._value)
-            .map(supplier => [supplier[0], supplier[1]._value]);
+        const sortedEnergySuppliers = sortEnergySuppliers(energySupplierEmission)
+        const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
-
-
-
-        // sortedEnergySuppliers.forEach(supplier => {
-        //     // console.log(supplier[0])
-        //     // console.log(sortedStations[supplier[0]])
-        // })
-
-        // console.log(Object.keys(sortedStations))
+        console.log(nearbyStationsPerSupplier)
 
         io.emit('fill-in-data', sortedStations);
     });
@@ -100,26 +91,30 @@ const getDistanceToStation = (stations, coordinates) => {
         station.distance = await distance(lat1, lat2, lon1, lon2);
 
         return station;
-    })
-
-
-    // return Object.values(sortedStations).map(values => {
-    //     return values.map(async (value) => {
-    //         lat2 = value.coordinates.latitude;
-    //         lon2 = value.coordinates.longitude;
-
-    //         value['distance'] = value['locationUid'];
-    //         delete value['locationUid'];
-    //         value.distance = await distance(lat1, lat2, lon1, lon2);
-
-    //         return value;
-    //     });
-    // });
+    });
 }
 
-// const renameOperatorStations = stations => {
-//     console.log(stations)
-// }
+const renameOperatorStations = stations => {
+    return stations.map(station => {
+        let operatorName = station.operatorName;
+        if (operatorName == 'PitPoint') {
+            station.operatorName = 'TotalGasPower';
+        } else if (operatorName == 'EV-Box') {
+            station.operatorName = 'Engie';
+        } else if (operatorName == 'LastMileSolutions') {
+            station.operatorName = 'Engie';
+        } else if (operatorName == 'Allego') {
+            station.operatorName = 'Vattenfall';
+        } else if (operatorName == 'Community by Shell Recharge') {
+            station.operatorName = 'EnergieDirect';
+        } else if (operatorName == 'Alfen') {
+            station.operatorName = 'Vandebron';
+        } else if (operatorName == 'E-Flux') {
+            station.operatorName = 'BudgetEnergie';
+        }
+        return station;
+    });
+}
 
 const getData = async () => {
     const query = `from(bucket: "providers")
@@ -158,6 +153,25 @@ const distance = (lat1, lat2, lon1, lon2) => {
 
     // Calculate the result
     return (Math.round(c * r));
+}
+
+const sortEnergySuppliers = suppliers => {
+    return Object.entries(suppliers)
+        .sort(([, a], [, b]) => a._value - b._value)
+        .map(supplier => [supplier[0], supplier[1]._value]);
+}
+
+const connectStationsToSupplier = (suppliers, stations) => {
+    return suppliers.map(supplier => {
+        if (stations[supplier[0]]) {
+            return {
+                [supplier[0]]: {
+                    'value': supplier[1],
+                    'stations': stations[supplier[0]]
+                }
+            }
+        }
+    }).filter(e => e)
 }
 
 app.use((req, res) => {
