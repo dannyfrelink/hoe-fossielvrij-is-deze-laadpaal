@@ -5,7 +5,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 const InfluxDatabase = require('@influxdata/influxdb-client');
 const InfluxDB = InfluxDatabase.InfluxDB;
@@ -18,8 +18,23 @@ const queryApi = client.getQueryApi(INFLUXDB_ORG);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+let users = {}
+
 io.on('connection', (socket) => {
+    // users[socket.id] = 'id';
+    socket.on('disconnect', () => {
+        delete users[socket.id];
+    });
+
     socket.on('location', async (coordinates) => {
+        users[coordinates.id] = {
+            'latitude': coordinates.latitude,
+            'longitude': coordinates.longitude,
+            'room': coordinates.room
+        }
+
+        socket.join(users[socket.id].room);
+
         const stations = await getClosestChargingStation(coordinates);
         const renamedStations = await renameOperatorStations(stations);
         const distancedStations = await getDistanceToStation(renamedStations, coordinates);
@@ -32,7 +47,8 @@ io.on('connection', (socket) => {
         const sortedEnergySuppliers = await sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
-        io.emit('fill-in-data', nearbyStationsPerSupplier);
+        io.to(users[socket.id].room).emit('fill-in-data', nearbyStationsPerSupplier);
+        // io.emit('fill-in-data', nearbyStationsPerSupplier);
     });
 });
 
