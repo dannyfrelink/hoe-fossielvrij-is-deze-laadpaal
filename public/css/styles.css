@@ -22,6 +22,10 @@ body {
     margin: 2rem auto;
 }
 
+h1 {
+    max-width: 85vw;
+}
+
 a {
     display: block;
     position: relative;
