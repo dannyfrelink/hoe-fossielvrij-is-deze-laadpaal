@@ -29,33 +29,24 @@ const showError = error => {
 getLocation();
 
 radiusFilter.addEventListener('change', () => {
-    chargingStations.textContent = ''
+    chargingStations.textContent = '';
 });
 
 socket.on('fill-in-data', stations => {
-    chargingStations.classList.remove('hidden')
+    chargingStations.classList.remove('hidden');
     loaderSection.classList.add('hidden');
 
     stations.map(station => {
         Object.keys(station).map(operator => {
             station[operator].stations.map(stat => {
-                test(station, operator, stat)
-
-                radiusFilter.addEventListener('change', () => {
-                    test(station, operator, stat)
-                })
-
-            })
-
-        })
+                fillInChargingStations(station, operator, stat);
+                radiusFilter.addEventListener('change', fillInChargingStations(station, operator, stat));
+            });
+        });
     });
-
-
 });
 
-
-
-const test = (station, operator, stat) => {
+const fillInChargingStations = (station, operator, stat) => {
     if (stat.distance < radiusFilter.value) {
 
         let latitude = stat.coordinates.latitude;
@@ -75,19 +66,19 @@ const test = (station, operator, stat) => {
         sustainabilityScore.textContent = 'Sustainability score: ';
         let sustainabilityValue = station[operator].value;
         if (sustainabilityValue <= 150) {
-            sustainabilityScore.classList.add('good_sustainability')
+            sustainabilityScore.classList.add('good_sustainability');
         } else if (sustainabilityValue > 150 && sustainabilityValue <= 250) {
-            sustainabilityScore.classList.add('decent_sustainability')
+            sustainabilityScore.classList.add('decent_sustainability');
         } else if (sustainabilityValue > 250 && sustainabilityValue <= 350) {
-            sustainabilityScore.classList.add('bad_sustainability')
+            sustainabilityScore.classList.add('bad_sustainability');
         } else if (sustainabilityValue > 350) {
-            sustainabilityScore.classList.add('terrible_sustainability')
+            sustainabilityScore.classList.add('terrible_sustainability');
         }
         let button = document.createElement('button');
 
         // Append children
         chargingStation.append(distanceText, operatorText, sustainabilityScore, button);
         chargingStations.appendChild(chargingStation);
-        return chargingStations
+        return chargingStations;
     }
 }
