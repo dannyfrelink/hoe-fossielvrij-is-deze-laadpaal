@@ -40,7 +40,9 @@ socket.on('fill-in-data', stations => {
         Object.keys(station).map(operator => {
             station[operator].stations.map(stat => {
                 fillInChargingStations(station, operator, stat);
-                radiusFilter.addEventListener('change', fillInChargingStations(station, operator, stat));
+                radiusFilter.addEventListener('change', () => {
+                    fillInChargingStations(station, operator, stat)
+                });
             });
         });
     });
@@ -79,6 +81,7 @@ const fillInChargingStations = (station, operator, stat) => {
         // Append children
         chargingStation.append(distanceText, operatorText, sustainabilityScore, button);
         chargingStations.appendChild(chargingStation);
+        console.log(chargingStations)
         return chargingStations;
     }
 }
