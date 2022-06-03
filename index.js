@@ -67,7 +67,7 @@ const getClosestChargingStation = async (coordinates) => {
     const latitude = coordinates.latitude;
     const longitude = coordinates.longitude;
 
-    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.0055}/${longitude + 0.0055}/${latitude - 0.0055}/${latitude + 0.0055}/15`;
+    const url = `https://ui-map.shellrecharge.com/api/map/v2/markers/${longitude - 0.0131}/${longitude + 0.0131}/${latitude - 0.0131}/${latitude + 0.0131}/15`;
     let dataSet = null;
 
     await fetch(url)
