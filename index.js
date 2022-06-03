@@ -141,8 +141,6 @@ const renameOperatorStations = stations => {
         } else if (operatorName == 'E-Flux') {
             station.operatorName = 'BudgetEnergie';
         }
-
-        console.log(station.operatorName)
         return station;
     });
 }
