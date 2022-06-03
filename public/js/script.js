@@ -81,7 +81,6 @@ const fillInChargingStations = (station, operator, stat) => {
         // Append children
         chargingStation.append(distanceText, operatorText, sustainabilityScore, button);
         chargingStations.appendChild(chargingStation);
-        console.log(chargingStations)
         return chargingStations;
     }
 }
