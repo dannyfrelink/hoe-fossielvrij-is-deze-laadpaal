@@ -134,13 +134,15 @@ const renameOperatorStations = stations => {
             station.operatorName = 'Engie';
         } else if (operatorName == 'Allego') {
             station.operatorName = 'Vattenfall';
-        } else if (operatorName == 'Community by Shell Recharge') {
+        } else if (operatorName == 'Community by Shell Recharge' || operatorName == 'Shell Recharge') {
             station.operatorName = 'EnergieDirect';
         } else if (operatorName == 'Alfen') {
             station.operatorName = 'Vandebron';
         } else if (operatorName == 'E-Flux') {
             station.operatorName = 'BudgetEnergie';
         }
+
+        console.log(station.operatorName)
         return station;
     });
 }
