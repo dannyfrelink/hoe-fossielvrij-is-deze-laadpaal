@@ -26,6 +26,53 @@ h1 {
     max-width: 85vw;
 }
 
+#error_message {
+    position: fixed;
+    top: calc(50vh - 8.25em / 2 - 1px * 2);
+    background-color: white;
+    color: black;
+    width: calc(85vw - 1rem * 2 - 1px * 2);
+    padding: 0.75rem 1rem;
+    border: 1px solid #080D55;
+    border-radius: 0.35em;
+    z-index: 2;
+}
+
+#error_message button::before {
+    content: '\00d7';
+    font-size: 175%;
+}
+
+#error_message button {
+    position: absolute;
+    top: -0.75rem;
+    right: -0.75rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: 1px solid #080D55;
+    border-radius: 1rem;
+    padding: 0 0.4rem;
+}
+
+#error_message_blur {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: lightgray;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+#error_message p {
+    margin: 0;
+}
+
+#error_message p+p {
+    margin-top: 1rem;
+}
+
 a {
     display: block;
     position: relative;
