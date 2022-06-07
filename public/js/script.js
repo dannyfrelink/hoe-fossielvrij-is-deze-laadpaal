@@ -1,4 +1,6 @@
 const socket = io();
+const filterContainer = document.querySelector('#filters_container');
+const closeFilters = document.querySelector('#filters button');
 const radiusFilter = document.querySelector('#radius');
 const errorMessageContainer = document.querySelector('#error_message_container');
 const closeErrorMessage = document.querySelector('#error_message button');
@@ -25,6 +27,10 @@ const showError = error => {
     }
 }
 getLocation();
+
+closeFilters.addEventListener('click', () => {
+    filterContainer.classList.add('hidden');
+});
 
 closeErrorMessage.addEventListener('click', () => {
     errorMessageContainer.classList.add('hidden');

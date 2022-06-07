@@ -26,23 +26,41 @@ h1 {
     max-width: 85vw;
 }
 
+#filters,
 #error_message {
     position: fixed;
-    top: calc(50vh - 8.25em / 2 - 1px * 2);
     background-color: white;
     color: black;
-    width: calc(85vw - 1rem * 2 - 1px * 2);
-    padding: 0.75rem 1rem;
     border: 1px solid #080D55;
     border-radius: 0.35em;
     z-index: 2;
+    padding: 0.75rem 1rem;
+    width: calc(85vw - 1rem * 2 - 1px * 2);
 }
 
+#filters {
+    top: calc(50vh - 123.59px / 2 - 1px * 2);
+}
+
+#filters h2 {
+    margin: 0 0 0.5em;
+}
+
+#filters>div+div {
+    margin-top: 0.35em;
+}
+
+#error_message {
+    top: calc(50vh - 132px / 2 - 1px * 2);
+}
+
+#filters button::before,
 #error_message button::before {
     content: '\00d7';
     font-size: 175%;
 }
 
+#filters button,
 #error_message button {
     position: absolute;
     top: -0.75rem;
@@ -54,6 +72,7 @@ h1 {
     padding: 0 0.4rem;
 }
 
+#filters_blur,
 #error_message_blur {
     position: fixed;
     left: 0;
