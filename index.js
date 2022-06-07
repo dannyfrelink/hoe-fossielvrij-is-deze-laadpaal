@@ -173,13 +173,9 @@ const sortEnergySuppliers = suppliers => {
         .map(supplier => [supplier[0], supplier[1]._value]);
 }
 
-// let rankCounter = 1;
-
 const connectStationsToSupplier = (suppliers, stations) => {
     return suppliers.map(supplier => {
         if (stations[supplier[0]]) {
-            // supplier[1] = rankCounter;
-            // rankCounter++;
             return {
                 [supplier[0]]: {
                     'value': supplier[1],
