@@ -19,7 +19,7 @@ body {
     font-family: roc-grotesk, sans-serif;
     color: white;
     width: 85vw;
-    margin: 2rem auto 5.5rem;
+    margin: 2rem auto 5rem;
 }
 
 h1 {
@@ -158,5 +158,5 @@ footer button {
 }
 
 footer button img {
-    height: 2.5rem;
+    height: 2rem;
 }
