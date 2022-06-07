@@ -58,10 +58,10 @@ const fillInChargingStations = (stations) => {
                     chargingStation.setAttribute('target', '_blank');
 
                     // Create content of each charging station
-                    let distanceText = document.createElement('h2');
-                    distanceText.textContent = `${stat.distance} meters`;
-                    let operatorText = document.createElement('p');
+                    let operatorText = document.createElement('h2');
                     operatorText.textContent = stat.operatorName;
+                    let distanceText = document.createElement('p');
+                    distanceText.textContent = `${stat.distance} meters`;
                     let sustainabilityScore = document.createElement('p');
                     let sustainabilityValue = station[operator].value;
                     if (sustainabilityValue == baseValue) {
@@ -72,7 +72,7 @@ const fillInChargingStations = (stations) => {
                     let button = document.createElement('button');
 
                     // Append children
-                    chargingStation.append(distanceText, operatorText, sustainabilityScore, button);
+                    chargingStation.append(operatorText, distanceText, sustainabilityScore, button);
                     chargingStations.appendChild(chargingStation);
                     return chargingStations;
                 }
