@@ -72,8 +72,7 @@ h1 {
     padding: 0 0.4rem;
 }
 
-#filters_blur,
-#error_message_blur {
+#pop_up_blur {
     position: fixed;
     left: 0;
     right: 0;
