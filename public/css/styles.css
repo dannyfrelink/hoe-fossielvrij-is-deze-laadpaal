@@ -44,7 +44,9 @@ a>* {
 }
 
 a>h2 {
+    font-size: 1.375em;
     padding-top: 0.75rem;
+    margin-bottom: 0.2rem;
 }
 
 a>p:first-of-type {
@@ -52,11 +54,6 @@ a>p:first-of-type {
     padding: 0;
     top: 0.9rem;
     right: 1rem;
-}
-
-a>p:last-of-type {
-    position: relative;
-    width: fit-content;
 }
 
 a>button::before {
@@ -76,33 +73,4 @@ a>button {
 
 .hidden {
     display: none;
-}
-
-.good_sustainability::after,
-.decent_sustainability::after,
-.bad_sustainability::after,
-.terrible_sustainability::after {
-    content: '';
-    position: absolute;
-    right: -0.4rem;
-    top: 0.2rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 1rem;
-}
-
-.good_sustainability::after {
-    background-color: limegreen;
-}
-
-.decent_sustainability::after {
-    background-color: yellow;
-}
-
-.bad_sustainability::after {
-    background-color: orange;
-}
-
-.terrible_sustainability::after {
-    background-color: red;
 }
