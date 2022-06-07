@@ -28,9 +28,16 @@ io.on('connection', (socket) => {
         const stations = await getClosestChargingStation(coordinates);
         const renamedStations = await renameOperatorStations(stations);
         const distancedStations = await getDistanceToStation(renamedStations, coordinates);
-        let sortedStations;
+        let sortedStationsOperator;
         await Promise.all(distancedStations).then(async (stations) => {
-            sortedStations = await groupBy(stations, 'operatorName');
+            sortedStationsOperator = await groupBy(stations, 'operatorName');
+        });
+        let sortedStations = {}
+        await Object.keys(sortedStationsOperator).map(operator => {
+            sortedStationsOperator[operator].sort((a, b) => {
+                return a.distance - b.distance
+            });
+            return sortedStations[operator] = sortedStationsOperator[operator]
         });
 
         const energySupplierEmission = await getData();
