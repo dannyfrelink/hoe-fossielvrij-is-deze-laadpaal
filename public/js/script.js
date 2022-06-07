@@ -6,6 +6,7 @@ const errorMessageContainer = document.querySelector('#error_message_container')
 const closeErrorMessage = document.querySelector('#error_message button');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
+const openFilters = document.querySelector('#open_filters');
 
 const getLocation = () => {
     if (navigator.geolocation) {
@@ -39,6 +40,10 @@ closeErrorMessage.addEventListener('click', () => {
 radiusFilter.addEventListener('change', () => {
     chargingStations.textContent = '';
 });
+
+openFilters.addEventListener('click', () => {
+    filterContainer.classList.remove('hidden');
+})
 
 socket.on('fill-in-data', stations => {
     chargingStations.classList.remove('hidden');
