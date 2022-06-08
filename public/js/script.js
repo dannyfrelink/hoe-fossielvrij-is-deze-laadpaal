@@ -77,11 +77,7 @@ const fillInChargingStations = (stations) => {
                     distanceText.textContent = `${stat.distance} meters`;
                     let sustainabilityScore = document.createElement('p');
                     let sustainabilityValue = station[operator].value;
-                    if (sustainabilityValue == baseValue) {
-                        sustainabilityScore.textContent = 'Sustainability score: 100%';
-                    } else {
-                        sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
-                    }
+                    sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
                     let button = document.createElement('button');
 
                     // Append children
