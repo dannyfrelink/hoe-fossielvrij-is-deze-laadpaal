@@ -183,7 +183,7 @@ const connectStationsToSupplier = (suppliers, stations) => {
                 }
             };
         }
-    }).filter(e => e)
+    }).filter(e => e);
 }
 
 app.use((req, res) => {
