@@ -18,7 +18,7 @@ const queryApi = client.getQueryApi(INFLUXDB_ORG);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-let users = {}
+let users = {};
 
 io.on('connection', (socket) => {
     users[socket.id] = Math.floor(Math.random() * 10000000);
@@ -35,9 +35,9 @@ io.on('connection', (socket) => {
         let sortedStations = {}
         await Object.keys(sortedStationsOperator).map(operator => {
             sortedStationsOperator[operator].sort((a, b) => {
-                return a.distance - b.distance
+                return a.distance - b.distance;
             });
-            return sortedStations[operator] = sortedStationsOperator[operator]
+            return sortedStations[operator] = sortedStationsOperator[operator];
         });
 
         const energySupplierEmission = await getData();
@@ -181,7 +181,7 @@ const connectStationsToSupplier = (suppliers, stations) => {
                     'value': supplier[1],
                     'stations': stations[supplier[0]]
                 }
-            }
+            };
         }
     }).filter(e => e)
 }
