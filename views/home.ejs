@@ -9,40 +9,29 @@
     <header>
         <h1>Sustainable Charge</h1>
 
-        <div class="hidden" id="filters_container">
-            <section id="filters">
-                <button></button>
-                <h2>Select your filters:</h2>
-                <div>
-                    <label for="radius">Radius:</label>
-                    <select name="radius" id="radius">
-                        <option value="250">250 meters</option>
-                        <option value="500" selected>500 meters</option>
-                        <option value="1000">1000 meters</option>
-                        <option value="1500">1500 meters</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="sort">Sort by:</label>
-                    <select name="sort" id="sort">
-                        <option value="sustainability" selected>Sustainability</option>
-                        <option value="distance">Distance</option>
-                    </select>
-                </div>
-            </section>
-            <div id="pop_up_blur"></div>
-        </div>
+        <nav>
+            <p>... results</p>
+            <img src="images/clock-icon.png" alt="Clock icon">
+            <img src="images/filter-icon.png" alt="Filter icon">
+        </nav>
 
+        <section class="hidden" id="filters">
+            <label for="radius">Radius:</label>
+            <select name="radius" id="radius">
+                <option value="250">250 meters</option>
+                <option value="500" selected>500 meters</option>
+                <option value="1000">1000 meters</option>
+                <option value="1500">1500 meters</option>
+            </select>
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort">
+                <option value="sustainability" selected>Sustainability</option>
+                <option value="distance">Distance</option>
+            </select>
+        </section>
     </header>
 
-    <div class="hidden" id="error_message_container">
-        <div id="error_message">
-            <button></button>
-            <p>It seems that we couldn't find your location.</p>
-            <p>Make sure you've enabled 'tracking your location' in your settings.</p>
-        </div>
-        <div id="pop_up_blur"></div>
-    </div>
+    <p class="hidden" id="error_message"></p>
 
     <section id="loader">
         <a></a>
@@ -55,7 +44,7 @@
     </section>
     <section id="charging_stations" class="hidden"></section>
 
-    <footer>
+    <!-- <footer>
         <button id="open_filters">
             <img src="images/filter-icon.png" alt="Filter Icon">
         </button>
@@ -65,7 +54,7 @@
         <button id="open_times">
             <img src="images/clock-icon.png" alt="Clock Icon">
         </button>
-    </footer>
+    </footer> -->
 </body>
 
 </html>
