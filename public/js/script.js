@@ -63,6 +63,8 @@ socket.on('fill-in-data', stations => {
 
     fillInChargingStations(stations);
     results.textContent = `${resultsAmount} results`;
+    // let chargingStationsArticles = document.querySelectorAll('#charging_stations article');
+    // console.log(chargingStationsArticles)
 
     radiusFilter.addEventListener('change', () => {
         fillInChargingStations(stations);
@@ -83,9 +85,9 @@ const fillInChargingStations = (stations) => {
                     let longitude = stat.coordinates.longitude;
 
                     // Create each charging station
-                    let chargingStation = document.createElement('a');
-                    chargingStation.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
-                    chargingStation.setAttribute('target', '_blank');
+                    let chargingStation = document.createElement('article');
+                    // chargingStation.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
+                    // chargingStation.setAttribute('target', '_blank');
 
                     // Create content of each charging station
                     let operatorText = document.createElement('h2');
@@ -96,9 +98,25 @@ const fillInChargingStations = (stations) => {
                     let sustainabilityValue = station[operator].value;
                     sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
                     let button = document.createElement('button');
+                    button.textContent = 'i';
+
+                    let extraInfoContainer = document.createElement('div');
+                    extraInfoContainer.classList.add('hidden');
+                    let operatorName = document.createElement('p');
+                    operatorName.textContent = `Operator: ${stat.operatorName}`;
+                    let startRoute = document.createElement('a');
+                    startRoute.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
+                    startRoute.setAttribute('target', '_blank');
+                    startRoute.textContent = 'Start route'
+
+
+                    chargingStation.addEventListener('click', () => {
+                        extraInfoContainer.classList.toggle('hidden');
+                    });
 
                     // Append children
-                    chargingStation.append(operatorText, distanceText, sustainabilityScore, button);
+                    extraInfoContainer.append(operatorName, startRoute);
+                    chargingStation.append(operatorText, distanceText, sustainabilityScore, button, extraInfoContainer);
                     chargingStations.appendChild(chargingStation);
                     return chargingStations;
                 }
