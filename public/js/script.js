@@ -63,8 +63,6 @@ socket.on('fill-in-data', stations => {
 
     fillInChargingStations(stations);
     results.textContent = `${resultsAmount} results`;
-    // let chargingStationsArticles = document.querySelectorAll('#charging_stations article');
-    // console.log(chargingStationsArticles)
 
     radiusFilter.addEventListener('change', () => {
         fillInChargingStations(stations);
