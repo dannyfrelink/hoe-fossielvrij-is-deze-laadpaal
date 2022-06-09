@@ -95,6 +95,7 @@ const fillInChargingStations = (stations) => {
 
                     // Extra information (displays on click article)
                     let extraInfoContainer = document.createElement('div');
+                    extraInfoContainer.setAttribute('id', 'extra_info_container');
                     extraInfoContainer.classList.add('hidden');
                     let operatorName = document.createElement('p');
                     operatorName.textContent = `Operator: ${stat.operatorName}`;
