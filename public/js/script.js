@@ -89,24 +89,28 @@ const fillInChargingStations = (stations) => {
                     // chargingStation.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
                     // chargingStation.setAttribute('target', '_blank');
 
+                    console.log(stat)
+
                     // Create content of each charging station
-                    let operatorText = document.createElement('h2');
-                    operatorText.textContent = stat.operatorName;
-                    let distanceText = document.createElement('p');
-                    distanceText.textContent = `${stat.distance} meters`;
-                    let sustainabilityScore = document.createElement('p');
-                    let sustainabilityValue = station[operator].value;
-                    sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
+                    let chargingStationID = document.createElement('h2');
+                    chargingStationID.textContent = `Station #${stat.uniqueKey.split('_')[0]}`;
+                    let distance = document.createElement('p');
+                    distance.textContent = `${stat.distance} meters`;
                     let button = document.createElement('button');
                     button.textContent = 'i';
 
                     // Extra information (displays on click article)
                     let extraInfoContainer = document.createElement('div');
                     extraInfoContainer.classList.add('hidden');
+                    let operatorName = document.createElement('p');
+                    operatorName.textContent = `Operator: ${stat.operatorName}`;
+                    let providerName = document.createElement('p');
+                    providerName.textContent = `Provider: ${stat.provider}`;
+                    let sustainabilityScore = document.createElement('p');
+                    let sustainabilityValue = station[operator].value;
+                    sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
                     let availability = document.createElement('p');
                     availability.textContent = `Current status: ${stat.status}`
-                    let operatorName = document.createElement('p');
-                    operatorName.textContent = `Operator: ${stat.provider}`;
                     let maxPower = document.createElement('p');
                     maxPower.textContent = `Maximum charging power: ${stat.maxPower}kW`
                     let startRoute = document.createElement('a');
@@ -121,8 +125,8 @@ const fillInChargingStations = (stations) => {
                     });
 
                     // Append children
-                    extraInfoContainer.append(operatorName, availability, maxPower, startRoute);
-                    chargingStation.append(operatorText, distanceText, sustainabilityScore, button, extraInfoContainer);
+                    extraInfoContainer.append(operatorName, providerName, sustainabilityScore, availability, maxPower, startRoute);
+                    chargingStation.append(chargingStationID, distance, button, extraInfoContainer);
                     chargingStations.appendChild(chargingStation);
                     return chargingStations;
                 }
