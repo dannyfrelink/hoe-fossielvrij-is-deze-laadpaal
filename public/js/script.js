@@ -86,10 +86,6 @@ const fillInChargingStations = (stations) => {
 
                     // Create each charging station
                     let chargingStation = document.createElement('article');
-                    // chargingStation.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
-                    // chargingStation.setAttribute('target', '_blank');
-
-                    console.log(stat)
 
                     // Create content of each charging station
                     let chargingStationID = document.createElement('h2');
@@ -118,6 +114,7 @@ const fillInChargingStations = (stations) => {
                     startRoute.setAttribute('target', '_blank');
                     startRoute.textContent = 'Start route';
 
+                    // Open and close extra info of article
                     chargingStation.addEventListener('click', (e) => {
                         if (e.target.tagName.toLowerCase() !== 'a') {
                             extraInfoContainer.classList.toggle('hidden');

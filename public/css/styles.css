@@ -124,24 +124,3 @@ article>button {
 .hidden {
     display: none;
 }
-
-/* footer {
-    display: flex;
-    justify-content: space-evenly;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--background-color);
-    border-top: 1px solid white;
-}
-
-footer button {
-    background-color: unset;
-    border: unset;
-    padding: 0.75rem;
-}
-
-footer button img {
-    height: 2rem;
-} */
