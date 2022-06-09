@@ -53,7 +53,7 @@ nav>button {
 }
 
 nav>button:first-of-type {
-    margin-left: auto;
+    margin: 0 0.5rem 0 auto;
 }
 
 nav>button.active {
