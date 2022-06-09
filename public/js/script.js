@@ -1,4 +1,5 @@
 const socket = io();
+const results = document.querySelector('#results');
 const radiusFilter = document.querySelector('#radius');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
@@ -28,23 +29,29 @@ radiusFilter.addEventListener('change', () => {
     chargingStations.textContent = '';
 });
 
+let resultsAmount = 0;
 socket.on('fill-in-data', stations => {
     chargingStations.classList.remove('hidden');
     loaderSection.classList.add('hidden');
 
     fillInChargingStations(stations);
+    results.textContent = `${resultsAmount} results`;
+
     radiusFilter.addEventListener('change', () => {
-        fillInChargingStations(stations)
+        fillInChargingStations(stations);
+        results.textContent = `${resultsAmount} results`;
     });
 });
 
 const fillInChargingStations = (stations) => {
+    resultsAmount = 0;
     const baseValue = Object.values(stations[0])[0].value;
 
     return stations.map(station => {
         return Object.keys(station).map(operator => {
             return station[operator].stations.map(stat => {
                 if (stat.distance < radiusFilter.value) {
+                    resultsAmount++
                     let latitude = stat.coordinates.latitude;
                     let longitude = stat.coordinates.longitude;
 
