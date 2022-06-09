@@ -11,8 +11,12 @@
 
         <nav>
             <p id="results">... results</p>
-            <img src="images/clock-icon.png" alt="Clock icon">
-            <img src="images/filter-icon.png" alt="Filter icon">
+            <button id="open_times">
+                <img src="images/clock-icon.png" alt="Clock icon">
+            </button>
+            <button id="open_filters">
+                <img src="images/filter-icon.png" alt="Filter icon">
+            </button>
         </nav>
 
         <section class="hidden" id="filters">
@@ -29,9 +33,13 @@
                 <option value="distance">Distance</option>
             </select>
         </section>
-    </header>
 
-    <p class="hidden" id="error_message"></p>
+        <section class="hidden" id="times">
+            <p>test</p>
+        </section>
+
+        <p class="hidden" id="error_message"></p>
+    </header>
 
     <section id="loader">
         <a></a>

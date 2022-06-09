@@ -39,20 +39,32 @@ h1 {
 
 nav {
     display: flex;
+    align-items: flex-end;
 }
 
 nav>p {
     margin: 0;
 }
 
-nav>img {
-    height: 1.5rem;
-    margin-left: 0.5rem;
+nav>button {
+    background-color: unset;
+    border: unset;
+    padding: 0.2rem 0.25rem 0;
 }
 
-nav>img:first-of-type {
+nav>button:first-of-type {
     margin-left: auto;
 }
+
+nav>button.active {
+    background-color: var(--secondary-color);
+    border-radius: 0.35rem;
+}
+
+nav>button>img {
+    height: 1.5rem;
+}
+
 
 #filters {
     margin-top: 0.75rem;
@@ -60,6 +72,7 @@ nav>img:first-of-type {
 
 #filters>select {
     font-size: 0.9rem;
+    text-align: center;
     margin: 0.15rem auto 0.75rem;
     color: white;
     background-color: var(--overlay-background-color);

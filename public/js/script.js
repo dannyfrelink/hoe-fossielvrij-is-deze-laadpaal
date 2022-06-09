@@ -1,5 +1,9 @@
 const socket = io();
 const results = document.querySelector('#results');
+const openTimes = document.querySelector('#open_times');
+const openFilters = document.querySelector('#open_filters');
+const filters = document.querySelector('#filters');
+const times = document.querySelector('#times');
 const radiusFilter = document.querySelector('#radius');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
@@ -24,6 +28,26 @@ const showError = error => {
     }
 }
 getLocation();
+
+openFilters.addEventListener('click', () => {
+    openFilters.classList.toggle('active');
+    filters.classList.toggle('hidden');
+
+    if (openFilters.classList[0] === 'active') {
+        openTimes.classList.remove('active');
+        times.classList.add('hidden');
+    }
+});
+
+openTimes.addEventListener('click', () => {
+    openTimes.classList.toggle('active');
+    times.classList.toggle('hidden');
+
+    if (openTimes.classList[0] === 'active') {
+        openFilters.classList.remove('active');
+        filters.classList.add('hidden');
+    }
+});
 
 radiusFilter.addEventListener('change', () => {
     chargingStations.textContent = '';
