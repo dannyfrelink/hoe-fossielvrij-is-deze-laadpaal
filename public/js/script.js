@@ -14,7 +14,7 @@ const getLocation = () => {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
         errorMessage.classList.remove('hidden');
-        errorMessage.textContent = 'Your browser does not let you share your location. Try in another browser.'
+        errorMessage.textContent = 'Your browser does not let you share your location. Maybe try in another browser.'
     }
 }
 
@@ -27,7 +27,7 @@ const showPosition = position => {
 const showError = error => {
     if (error.PERMISSION_DENIED) {
         errorMessage.classList.remove('hidden');
-        errorMessage.textContent = "It seems that we don't have access to your location. Check your setting to enable us to track your location."
+        errorMessage.textContent = "It seems that we don't have access to your location. Check your settings to enable us to track your location."
     }
 }
 getLocation();
@@ -36,7 +36,7 @@ openFilters.addEventListener('click', () => {
     openFilters.classList.toggle('active');
     filters.classList.toggle('hidden');
 
-    if (openFilters.classList[0] === 'active') {
+    if (openFilters.classList.contains('active')) {
         openTimes.classList.remove('active');
         times.classList.add('hidden');
     }
@@ -46,7 +46,7 @@ openTimes.addEventListener('click', () => {
     openTimes.classList.toggle('active');
     times.classList.toggle('hidden');
 
-    if (openTimes.classList[0] === 'active') {
+    if (openTimes.classList.contains('active')) {
         openFilters.classList.remove('active');
         filters.classList.add('hidden');
     }
