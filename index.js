@@ -82,10 +82,7 @@ const getClosestChargingStation = async (coordinates) => {
         .then(data => dataSet = data)
         .catch(err => console.log(err))
 
-    const availableStations = dataSet.filter(data => {
-        return data.status == 'Available'
-    });
-    return availableStations;
+    return dataSet;
 }
 
 // Resource: https://www.geeksforgeeks.org/program-distance-two-points-earth/#:%7E:text=For%20this%20divide%20the%20values,is%20the%20radius%20of%20Earth.
@@ -179,7 +176,7 @@ const connectStationsToSupplier = (suppliers, stations) => {
             return {
                 [supplier[0]]: {
                     'value': supplier[1],
-                    'stations': stations[supplier[0]]
+                    'stations': stations[supplier[0]],
                 }
             };
         }
