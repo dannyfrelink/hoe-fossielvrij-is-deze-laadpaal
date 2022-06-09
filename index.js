@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
         const distancedStations = await getDistanceToStation(renamedStations, coordinates);
         let sortedStationsOperator;
         await Promise.all(distancedStations).then(async (stations) => {
-            sortedStationsOperator = await groupBy(stations, 'operatorName');
+            sortedStationsOperator = await groupBy(stations, 'provider');
         });
         let sortedStations = {}
         await Object.keys(sortedStationsOperator).map(operator => {
@@ -59,7 +59,7 @@ app.get('/', async (req, res) => {
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
         const value = item[prop];
-        if (prop == 'operatorName') {
+        if (prop == 'provider') {
             out[value] = out[value] || [];
             out[value].push(item);
         } else {
@@ -131,19 +131,19 @@ const renameOperatorStations = stations => {
     return stations.map(station => {
         let operatorName = station.operatorName;
         if (operatorName == 'PitPoint') {
-            station.operatorName = 'TotalGasPower';
+            station['provider'] = 'TotalGasPower';
         } else if (operatorName == 'EV-Box') {
-            station.operatorName = 'Engie';
+            station['provider'] = 'Engie';
         } else if (operatorName == 'LastMileSolutions') {
-            station.operatorName = 'Engie';
+            station['provider'] = 'Engie';
         } else if (operatorName == 'Allego') {
-            station.operatorName = 'Vattenfall';
+            station['provider'] = 'Vattenfall';
         } else if (operatorName == 'Community by Shell Recharge' || operatorName == 'Shell Recharge') {
-            station.operatorName = 'EnergieDirect';
+            station['provider'] = 'EnergieDirect';
         } else if (operatorName == 'Alfen') {
-            station.operatorName = 'Vandebron';
+            station['provider'] = 'Vandebron';
         } else if (operatorName == 'E-Flux') {
-            station.operatorName = 'BudgetEnergie';
+            station['provider'] = 'BudgetEnergie';
         }
         return station;
     });
