@@ -106,7 +106,7 @@ const fillInChargingStations = (stations) => {
                     let availability = document.createElement('p');
                     availability.textContent = `Current status: ${stat.status}`
                     let operatorName = document.createElement('p');
-                    operatorName.textContent = `Operator: ${stat.operatorName}`;
+                    operatorName.textContent = `Operator: ${stat.provider}`;
                     let maxPower = document.createElement('p');
                     maxPower.textContent = `Maximum charging power: ${stat.maxPower}kW`
                     let startRoute = document.createElement('a');
