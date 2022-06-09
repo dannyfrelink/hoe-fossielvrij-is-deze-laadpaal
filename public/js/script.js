@@ -5,6 +5,7 @@ const openFilters = document.querySelector('#open_filters');
 const filters = document.querySelector('#filters');
 const times = document.querySelector('#times');
 const radiusFilter = document.querySelector('#radius');
+const errorMessage = document.querySelector('#error_message');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
 
@@ -12,7 +13,8 @@ const getLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        errorMessageContainer.classList.remove('hidden');
+        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = 'Your browser does not let you share your location. Try in another browser.'
     }
 }
 
@@ -24,7 +26,8 @@ const showPosition = position => {
 
 const showError = error => {
     if (error.PERMISSION_DENIED) {
-        errorMessageContainer.classList.remove('hidden');
+        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = "It seems that we don't have access to your location. Check your setting to enable us to track your location."
     }
 }
 getLocation();
