@@ -1,12 +1,7 @@
 const socket = io();
-const filterContainer = document.querySelector('#filters_container');
-const closeFilters = document.querySelector('#filters button');
 const radiusFilter = document.querySelector('#radius');
-const errorMessageContainer = document.querySelector('#error_message_container');
-const closeErrorMessage = document.querySelector('#error_message button');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
-const openFilters = document.querySelector('#open_filters');
 
 const getLocation = () => {
     if (navigator.geolocation) {
@@ -29,21 +24,9 @@ const showError = error => {
 }
 getLocation();
 
-closeFilters.addEventListener('click', () => {
-    filterContainer.classList.add('hidden');
-});
-
-closeErrorMessage.addEventListener('click', () => {
-    errorMessageContainer.classList.add('hidden');
-});
-
 radiusFilter.addEventListener('change', () => {
     chargingStations.textContent = '';
 });
-
-openFilters.addEventListener('click', () => {
-    filterContainer.classList.remove('hidden');
-})
 
 socket.on('fill-in-data', stations => {
     chargingStations.classList.remove('hidden');
