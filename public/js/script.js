@@ -82,33 +82,33 @@ const fillInChargingStations = (stations) => {
                     let latitude = stat.coordinates.latitude;
                     let longitude = stat.coordinates.longitude;
 
-                    // Create each charging station
+                    // Create all elements
                     let chargingStation = document.createElement('article');
+                    let chargingStationID = document.createElement('h2');
+                    let distance = document.createElement('p');
+                    let button = document.createElement('button');
+                    let extraInfoContainer = document.createElement('div');
+                    let operatorName = document.createElement('p');
+                    let providerName = document.createElement('p');
+                    let sustainabilityScore = document.createElement('p');
+                    let availability = document.createElement('p');
+                    let maxPower = document.createElement('p');
+                    let startRoute = document.createElement('a');
 
                     // Create content of each charging station
-                    let chargingStationID = document.createElement('h2');
                     chargingStationID.textContent = `Station #${stat.uniqueKey.split('_')[0]}`;
-                    let distance = document.createElement('p');
                     distance.textContent = `${stat.distance} meters`;
-                    let button = document.createElement('button');
                     button.textContent = 'i';
 
                     // Extra information (displays on click article)
-                    let extraInfoContainer = document.createElement('div');
                     extraInfoContainer.setAttribute('id', 'extra_info_container');
                     extraInfoContainer.classList.add('hidden');
-                    let operatorName = document.createElement('p');
                     operatorName.textContent = `Operator: ${stat.operatorName}`;
-                    let providerName = document.createElement('p');
                     providerName.textContent = `Provider: ${stat.provider}`;
-                    let sustainabilityScore = document.createElement('p');
                     let sustainabilityValue = station[operator].value;
                     sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
-                    let availability = document.createElement('p');
                     availability.textContent = `Current status: ${stat.status}`
-                    let maxPower = document.createElement('p');
                     maxPower.textContent = `Maximum charging power: ${stat.maxPower}kW`
-                    let startRoute = document.createElement('a');
                     startRoute.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
                     startRoute.setAttribute('target', '_blank');
                     startRoute.textContent = 'Start route';
