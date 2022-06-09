@@ -100,22 +100,28 @@ const fillInChargingStations = (stations) => {
                     let button = document.createElement('button');
                     button.textContent = 'i';
 
+                    // Extra information (displays on click article)
                     let extraInfoContainer = document.createElement('div');
                     extraInfoContainer.classList.add('hidden');
+                    let availability = document.createElement('p');
+                    availability.textContent = `Current status: ${stat.status}`
                     let operatorName = document.createElement('p');
                     operatorName.textContent = `Operator: ${stat.operatorName}`;
+                    let maxPower = document.createElement('p');
+                    maxPower.textContent = `Maximum charging power: ${stat.maxPower}kW`
                     let startRoute = document.createElement('a');
                     startRoute.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
                     startRoute.setAttribute('target', '_blank');
-                    startRoute.textContent = 'Start route'
+                    startRoute.textContent = 'Start route';
 
-
-                    chargingStation.addEventListener('click', () => {
-                        extraInfoContainer.classList.toggle('hidden');
+                    chargingStation.addEventListener('click', (e) => {
+                        if (e.target.tagName.toLowerCase() !== 'a') {
+                            extraInfoContainer.classList.toggle('hidden');
+                        }
                     });
 
                     // Append children
-                    extraInfoContainer.append(operatorName, startRoute);
+                    extraInfoContainer.append(operatorName, availability, maxPower, startRoute);
                     chargingStation.append(operatorText, distanceText, sustainabilityScore, button, extraInfoContainer);
                     chargingStations.appendChild(chargingStation);
                     return chargingStations;
