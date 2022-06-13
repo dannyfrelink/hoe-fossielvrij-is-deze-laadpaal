@@ -5,6 +5,7 @@ const openFilters = document.querySelector('#open_filters');
 const filters = document.querySelector('#filters');
 const times = document.querySelector('#times');
 const radiusFilter = document.querySelector('#radius');
+const sortBy = document.querySelector('#sort');
 const errorMessage = document.querySelector('#error_message');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
@@ -56,16 +57,31 @@ radiusFilter.addEventListener('change', () => {
     chargingStations.textContent = '';
 });
 
+sortBy.addEventListener('change', () => {
+    chargingStations.textContent = '';
+});
+
 let resultsAmount = 0;
 socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
     chargingStations.classList.remove('hidden');
     loaderSection.classList.add('hidden');
 
-    // fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
-    // radiusFilter.addEventListener('change', () => {
-    //     fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
-    //     results.textContent = `${resultsAmount} results`;
-    // });
+    sortBy.addEventListener('change', () => {
+        if (sortBy.value == 'sustainability') {
+            fillInChargingStationsBySupplier(stationsBySupplier);
+        } else if (sortBy.value == 'distance') {
+            fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
+        }
+    });
+
+    radiusFilter.addEventListener('change', () => {
+        if (sortBy.value == 'sustainability') {
+            fillInChargingStationsBySupplier(stationsBySupplier);
+        } else if (sortBy.value == 'distance') {
+            fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
+        }
+        results.textContent = `${resultsAmount} results`;
+    });
 
     fillInChargingStationsBySupplier(stationsBySupplier);
     results.textContent = `${resultsAmount} results`;
