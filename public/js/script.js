@@ -57,20 +57,95 @@ radiusFilter.addEventListener('change', () => {
 });
 
 let resultsAmount = 0;
-socket.on('fill-in-data', stations => {
+socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
     chargingStations.classList.remove('hidden');
     loaderSection.classList.add('hidden');
 
-    fillInChargingStations(stations);
-    results.textContent = `${resultsAmount} results`;
-
+    fillInChargingStationsByDistance(stationsByDistance);
     radiusFilter.addEventListener('change', () => {
-        fillInChargingStations(stations);
+        fillInChargingStationsByDistance(stationsByDistance);
         results.textContent = `${resultsAmount} results`;
     });
+
+    // fillInChargingStationsBySupplier(stationsBySupplier);
+    results.textContent = `${resultsAmount} results`;
+
+    // radiusFilter.addEventListener('change', () => {
+    //     fillInChargingStationsBySupplier(stationsBySupplier);
+    //     results.textContent = `${resultsAmount} results`;
+    // });
 });
 
-const fillInChargingStations = (stations) => {
+const fillInChargingStationsByDistance = stations => {
+    console.log(stations)
+    resultsAmount = 0;
+
+    Object.values(stations).map(station => {
+        station.map(stat => {
+            if (stat.distance < radiusFilter.value) {
+                resultsAmount++;
+                let latitude = stat.coordinates.latitude;
+                let longitude = stat.coordinates.longitude;
+
+                // Create all elements
+                let chargingStation = document.createElement('article');
+                let address = document.createElement('h2');
+                let distance = document.createElement('p');
+                let button = document.createElement('button');
+                let extraInfoContainer = document.createElement('div');
+                let operatorName = document.createElement('p');
+                let providerName = document.createElement('p');
+                let sustainabilityScore = document.createElement('p');
+                let availability = document.createElement('p');
+                let maxPower = document.createElement('p');
+                let startRoute = document.createElement('a');
+
+                let streetName = stat.address.map(address => {
+                    if (address.id.includes('address')) {
+                        return address.text;
+                    }
+                }).filter(e => e);
+
+                // Create content of each charging station
+                address.textContent = streetName[0];
+                distance.textContent = `${stat.distance} meters`;
+                button.textContent = 'i';
+
+                // Extra information (displays on click article)
+                extraInfoContainer.setAttribute('id', 'extra_info_container');
+                extraInfoContainer.classList.add('hidden');
+                operatorName.textContent = `Operator: ${stat.operatorName}`;
+                providerName.textContent = `Provider: ${stat.provider}`;
+                // let sustainabilityValue = station[operator].value;
+                // sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`
+                availability.textContent = `Current status: ${stat.status}`
+                maxPower.textContent = `Maximum charging power: ${stat.maxPower}kW`
+                startRoute.setAttribute('href', `http://www.google.com/maps/place/${latitude},${longitude}`);
+                startRoute.setAttribute('target', '_blank');
+                startRoute.textContent = 'Start route';
+
+                // Open and close extra info of article
+                chargingStation.addEventListener('click', (e) => {
+                    if (e.target.tagName.toLowerCase() !== 'a') {
+                        extraInfoContainer.classList.toggle('hidden');
+                    }
+                });
+
+                // Append children
+                if (streetName.length > 0) {
+                    extraInfoContainer.append(operatorName, providerName, sustainabilityScore, availability, maxPower, startRoute);
+                    chargingStation.append(address, distance, button, extraInfoContainer);
+                    chargingStations.appendChild(chargingStation);
+                }
+                return chargingStations;
+
+            }
+        });
+    });
+    // return stations.map(station => console.log(station))
+}
+
+const fillInChargingStationsBySupplier = stations => {
     resultsAmount = 0;
     const baseValue = Object.values(stations[0])[0].value;
 
@@ -133,7 +208,6 @@ const fillInChargingStations = (stations) => {
                         chargingStations.appendChild(chargingStation);
                     }
                     return chargingStations;
-
                 }
             });
         });

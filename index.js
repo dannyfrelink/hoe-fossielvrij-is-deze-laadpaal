@@ -29,11 +29,11 @@ io.on('connection', (socket) => {
         const stations = await getClosestChargingStation(coordinates);
         const renamedStations = await renameOperatorStations(stations);
         const stationsWithAddress = await getAddressFromCoords(renamedStations);
-        let addressedStations = await Promise.all(stationsWithAddress)
+        const addressedStations = await Promise.all(stationsWithAddress)
             .then(stations => stations);
-        console.log(addressedStations)
-        const distancedStations = await getDistanceToStation(renamedStations, coordinates);
-        let sortedStationsOperator = await Promise.all(distancedStations).then(async (stations) => groupBy(stations, 'provider'));
+        const distancedStations = await getDistanceToStation(addressedStations, coordinates);
+        let sortedStationsDistance = await Promise.all(distancedStations).then(stations => groupBy(stations, 'distance'));
+        let sortedStationsOperator = await Promise.all(distancedStations).then(stations => groupBy(stations, 'provider'));
         let sortedStations = {};
         await Object.keys(sortedStationsOperator).map(operator => {
             sortedStationsOperator[operator].sort((a, b) => a.distance - b.distance);
@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
         const sortedEnergySuppliers = await sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
-        io.to(users[socket.id]).emit('fill-in-data', nearbyStationsPerSupplier);
+        io.to(users[socket.id]).emit('fill-in-data', nearbyStationsPerSupplier, sortedStationsDistance);
     });
 
     socket.on('disconnect', () => {
@@ -75,7 +75,7 @@ const getAddressFromCoords = async (stations) => {
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
         const value = item[prop];
-        if (prop == 'provider' || prop == '_time') {
+        if (prop == 'provider' || prop == '_time' || prop == 'distance') {
             out[value] = out[value] || [];
             out[value].push(item);
         } else {
@@ -151,7 +151,7 @@ const renameOperatorStations = stations => {
             station['provider'] = 'Engie';
         } else if (operatorName == 'LastMileSolutions') {
             station['provider'] = 'Engie';
-        } else if (operatorName == 'Allego') {
+        } else if (operatorName == 'Allego' || operatorName == 'Vattenfall') {
             station['provider'] = 'Vattenfall';
         } else if (operatorName == 'Community by Shell Recharge' || operatorName == 'Shell Recharge') {
             station['provider'] = 'EnergieDirect';
