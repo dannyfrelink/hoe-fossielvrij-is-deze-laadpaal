@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5151;
+require('dotenv').config();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
@@ -27,20 +28,19 @@ io.on('connection', (socket) => {
     socket.on('location', async (coordinates) => {
         const stations = await getClosestChargingStation(coordinates);
         const renamedStations = await renameOperatorStations(stations);
+        const stationsWithAddress = await getAddressFromCoords(renamedStations);
+        let addressedStations = await Promise.all(stationsWithAddress)
+            .then(stations => stations);
+        console.log(addressedStations)
         const distancedStations = await getDistanceToStation(renamedStations, coordinates);
-        let sortedStationsOperator;
-        await Promise.all(distancedStations).then(async (stations) => {
-            sortedStationsOperator = await groupBy(stations, 'provider');
-        });
-        let sortedStations = {}
+        let sortedStationsOperator = await Promise.all(distancedStations).then(async (stations) => groupBy(stations, 'provider'));
+        let sortedStations = {};
         await Object.keys(sortedStationsOperator).map(operator => {
-            sortedStationsOperator[operator].sort((a, b) => {
-                return a.distance - b.distance;
-            });
+            sortedStationsOperator[operator].sort((a, b) => a.distance - b.distance);
             return sortedStations[operator] = sortedStationsOperator[operator];
         });
 
-        const energySupplierEmission = await getData();
+        const energySupplierEmission = await getProviderData();
         const sortedEnergySuppliers = await sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
 
@@ -53,19 +53,34 @@ io.on('connection', (socket) => {
 });
 
 app.get('/', async (req, res) => {
+    const timesData = await getTimesData();
+    // Object.keys(timesData).map(time => {
+    //     console.log(timesData[time])
+    // })
+    // console.log(timesData)
     res.render('home')
 });
+
+const getAddressFromCoords = async (stations) => {
+    return await stations.map(station => {
+        return fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${station.coordinates.longitude},${station.coordinates.latitude}.json?access_token=${process.env.API_TOKEN}`)
+            .then(res => res.json())
+            .then(data => {
+                station['address'] = data.features;
+                return station
+            });
+    });
+}
 
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
         const value = item[prop];
-        if (prop == 'provider') {
+        if (prop == 'provider' || prop == '_time') {
             out[value] = out[value] || [];
             out[value].push(item);
         } else {
             out[value] = item;
         }
-
         return out;
     }, {});
 }
@@ -149,7 +164,7 @@ const renameOperatorStations = stations => {
     });
 }
 
-const getData = async () => {
+const getProviderData = async () => {
     const query = `from(bucket: "providers")
     |> range(start: -28h, stop: -27h)
     |> filter(fn: (r) => r["_measurement"] == "past_providers")`;
@@ -181,6 +196,32 @@ const connectStationsToSupplier = (suppliers, stations) => {
             };
         }
     }).filter(e => e);
+}
+
+const getTimesData = async () => {
+    const query = `
+    from(bucket: "elmap")
+      |> range(start: now(), stop: 24h)
+      |> filter(fn: (r) => r["_measurement"] == "forecast")
+      |> filter(fn: (r) => r["kind"] == "powerConsumptionBreakdown")
+      |> filter(fn: (r) => r["zone"] == "NL")
+      |> filter(fn: (r) => r["timeoffset"] == "baseline")
+      |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+      |> sort(columns: ["_time"], desc: false)
+      |> yield(name: "mean")
+    `;
+    try {
+        const rows = await queryApi.collectRows(query);
+        const convertedTimes = rows.map(row => {
+            row['_time'] = row._time.split('T')[1].slice(0, 5);
+            return row;
+        });
+        const data = groupBy(convertedTimes, "_time");
+        return data;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 app.use((req, res) => {

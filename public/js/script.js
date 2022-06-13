@@ -84,7 +84,7 @@ const fillInChargingStations = (stations) => {
 
                     // Create all elements
                     let chargingStation = document.createElement('article');
-                    let chargingStationID = document.createElement('h2');
+                    let address = document.createElement('h2');
                     let distance = document.createElement('p');
                     let button = document.createElement('button');
                     let extraInfoContainer = document.createElement('div');
@@ -95,8 +95,14 @@ const fillInChargingStations = (stations) => {
                     let maxPower = document.createElement('p');
                     let startRoute = document.createElement('a');
 
+                    let streetName = stat.address.map(address => {
+                        if (address.id.includes('address')) {
+                            return address.text;
+                        }
+                    }).filter(e => e);
+
                     // Create content of each charging station
-                    chargingStationID.textContent = `Station #${stat.uniqueKey.split('_')[0]}`;
+                    address.textContent = streetName[0];
                     distance.textContent = `${stat.distance} meters`;
                     button.textContent = 'i';
 
@@ -121,10 +127,13 @@ const fillInChargingStations = (stations) => {
                     });
 
                     // Append children
-                    extraInfoContainer.append(operatorName, providerName, sustainabilityScore, availability, maxPower, startRoute);
-                    chargingStation.append(chargingStationID, distance, button, extraInfoContainer);
-                    chargingStations.appendChild(chargingStation);
+                    if (streetName.length > 0) {
+                        extraInfoContainer.append(operatorName, providerName, sustainabilityScore, availability, maxPower, startRoute);
+                        chargingStation.append(address, distance, button, extraInfoContainer);
+                        chargingStations.appendChild(chargingStation);
+                    }
                     return chargingStations;
+
                 }
             });
         });
