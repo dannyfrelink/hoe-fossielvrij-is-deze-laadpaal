@@ -43,8 +43,11 @@ io.on('connection', (socket) => {
         const energySupplierEmission = await getProviderData();
         const sortedEnergySuppliers = await sortEnergySuppliers(energySupplierEmission)
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
+        await connectStationsToDistance(sortedEnergySuppliers, sortedStationsDistance);
 
-        io.to(users[socket.id]).emit('fill-in-data', nearbyStationsPerSupplier, sortedStationsDistance);
+        // console.log(nearbyStationsPerDistance)
+
+        io.to(users[socket.id]).emit('fill-in-data', nearbyStationsPerSupplier, nearbyStationsPerDistance);
     });
 
     socket.on('disconnect', () => {
@@ -196,6 +199,24 @@ const connectStationsToSupplier = (suppliers, stations) => {
             };
         }
     }).filter(e => e);
+}
+
+const nearbyStationsPerDistance = [];
+const connectStationsToDistance = (suppliers, stations) => {
+    Object.values(stations).map(station => {
+        station.map(stat => {
+            suppliers.map(supplier => {
+                if (stat.provider == supplier[0]) {
+                    nearbyStationsPerDistance.push({
+                        [stat.distance]: {
+                            'value': supplier[1],
+                            'stations': stat
+                        }
+                    });
+                }
+            });
+        });
+    });
 }
 
 const getTimesData = async () => {
