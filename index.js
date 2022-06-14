@@ -66,9 +66,6 @@ app.get('/', async (req, res) => {
                 goodMaterial[results._value] = results;
             }
         });
-        console.log('new line')
-        // console.log(badMaterial)
-        // console.log(goodMaterial)
         let badMaterialTotal = Object.keys(badMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
         let goodMaterialTotal = Object.keys(goodMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
         let badMaterialResults = [];
@@ -90,7 +87,6 @@ app.get('/', async (req, res) => {
 
         data.push({ [calculate]: Object.values(badMaterialObject)[0] })
     });
-    console.log(data)
     res.render('home')
 });
 
