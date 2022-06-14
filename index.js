@@ -56,37 +56,7 @@ io.on('connection', (socket) => {
 app.get('/', async (req, res) => {
     const timesData = await getTimesData();
     let data = [];
-    Object.keys(timesData).map(time => {
-        let badMaterial = {};
-        let goodMaterial = {};
-        timesData[time].map(results => {
-            if (results._field == 'gas' || results._field == 'coal') {
-                badMaterial[results._value] = results;
-            } else {
-                goodMaterial[results._value] = results;
-            }
-        });
-        let badMaterialTotal = Object.keys(badMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
-        let goodMaterialTotal = Object.keys(goodMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
-        let badMaterialResults = [];
-        Object.values(badMaterial).map(results => {
-            badMaterialResults.push(results);
-        });
-        let goodMaterialResults = [];
-        Object.values(goodMaterial).map(results => {
-            goodMaterialResults.push(results);
-        });
-
-        let badMaterialObject = { [badMaterialTotal]: badMaterialResults[0]._time };
-        let goodMaterialObject = { [goodMaterialTotal]: goodMaterialResults[0]._time };
-
-        let badValue = Number(Object.keys(badMaterialObject)[0]);
-        let goodValue = Number(Object.keys(goodMaterialObject)[0]);
-        let totalValue = badValue + goodValue;
-        let calculate = `${Math.round(goodValue / totalValue * 100)}%`;
-
-        data.push({ [calculate]: Object.values(badMaterialObject)[0] });
-    });
+    await cleanTimeData(timesData, data)
 
     const bestTimes = data.filter(d => Number(Object.keys(d)[0].split('%')[0]) > 50);
     res.render('home', { bestTimes })
@@ -271,6 +241,40 @@ const getTimesData = async () => {
         console.error(error);
         return [];
     }
+}
+
+const cleanTimeData = (timesData, data) => {
+    Object.keys(timesData).map(time => {
+        let badMaterial = {};
+        let goodMaterial = {};
+        timesData[time].map(results => {
+            if (results._field == 'gas' || results._field == 'coal') {
+                badMaterial[results._value] = results;
+            } else {
+                goodMaterial[results._value] = results;
+            }
+        });
+        let badMaterialTotal = Object.keys(badMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
+        let goodMaterialTotal = Object.keys(goodMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
+        let badMaterialResults = [];
+        Object.values(badMaterial).map(results => {
+            badMaterialResults.push(results);
+        });
+        let goodMaterialResults = [];
+        Object.values(goodMaterial).map(results => {
+            goodMaterialResults.push(results);
+        });
+
+        let badMaterialObject = { [badMaterialTotal]: badMaterialResults[0]._time };
+        let goodMaterialObject = { [goodMaterialTotal]: goodMaterialResults[0]._time };
+
+        let badValue = Number(Object.keys(badMaterialObject)[0]);
+        let goodValue = Number(Object.keys(goodMaterialObject)[0]);
+        let totalValue = badValue + goodValue;
+        let calculate = `${Math.round(goodValue / totalValue * 100)}%`;
+
+        data.push({ [calculate]: Object.values(badMaterialObject)[0] });
+    });
 }
 
 app.use((req, res) => {
