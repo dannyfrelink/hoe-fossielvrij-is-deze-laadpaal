@@ -35,7 +35,13 @@
         </section>
 
         <section class="hidden" id="times">
-            <p>test</p>
+            <% bestTimes.forEach(function(time) { %>
+                <article>
+                    <p>
+                        <%= Object.keys(time)[0] %>: <%= Object.values(time)[0] %>
+                    </p>
+                </article>
+                <% }) %>
         </section>
 
         <p class="hidden" id="error_message"></p>
