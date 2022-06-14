@@ -88,9 +88,9 @@ app.get('/', async (req, res) => {
         data.push({ [calculate]: Object.values(badMaterialObject)[0] });
     });
 
-    const bestTimes = data.filter(d => Number(Object.keys(d)[0].split('%')[0]) > 50);
-    console.log(bestTimes)
-    res.render('home')
+    const bestScores = data.filter(d => Number(Object.keys(d)[0].split('%')[0]) > 50);
+    const bestTimes = bestScores.map(score => Object.values(score)[0])
+    res.render('home', { bestTimes })
 });
 
 const groupBy = (items, prop) => {
