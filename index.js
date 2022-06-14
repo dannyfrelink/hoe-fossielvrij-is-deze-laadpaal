@@ -85,8 +85,11 @@ app.get('/', async (req, res) => {
         let totalValue = badValue + goodValue;
         let calculate = `${Math.round(goodValue / totalValue * 100)}%`;
 
-        data.push({ [calculate]: Object.values(badMaterialObject)[0] })
+        data.push({ [calculate]: Object.values(badMaterialObject)[0] });
     });
+
+    const bestTimes = data.filter(d => Number(Object.keys(d)[0].split('%')[0]) > 50);
+    console.log(bestTimes)
     res.render('home')
 });
 
