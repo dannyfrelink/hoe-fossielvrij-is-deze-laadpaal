@@ -92,6 +92,38 @@ socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
     });
 });
 
+const fillInChargingStationsByDistance = (stations, value) => {
+    resultsAmount = 0;
+    const baseValue = Object.values(value[0])[0].value;
+
+    stations.map(station => {
+        Object.values(station).map(stat => {
+            let sustainabilityScore = document.createElement('p');
+            let sustainabilityValue = stat.value;
+            sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`;
+
+            insertContent(stat.stations, sustainabilityScore);
+        });
+    });
+}
+
+const fillInChargingStationsBySupplier = stations => {
+    resultsAmount = 0;
+    const baseValue = Object.values(stations[0])[0].value;
+
+    return stations.map(station => {
+        return Object.keys(station).map(operator => {
+            return station[operator].stations.map(stat => {
+                let sustainabilityScore = document.createElement('p');
+                let sustainabilityValue = station[operator].value;
+                sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`;
+
+                insertContent(stat, sustainabilityScore);
+            });
+        });
+    });
+}
+
 const insertContent = (station, sustainabilityScore) => {
     if (station.distance < radiusFilter.value) {
         resultsAmount++;
@@ -147,36 +179,4 @@ const insertContent = (station, sustainabilityScore) => {
         }
         return chargingStations;
     }
-}
-
-const fillInChargingStationsByDistance = (stations, value) => {
-    resultsAmount = 0;
-    const baseValue = Object.values(value[0])[0].value;
-
-    stations.map(station => {
-        Object.values(station).map(stat => {
-            let sustainabilityScore = document.createElement('p');
-            let sustainabilityValue = stat.value;
-            sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`;
-
-            insertContent(stat.stations, sustainabilityScore);
-        });
-    });
-}
-
-const fillInChargingStationsBySupplier = stations => {
-    resultsAmount = 0;
-    const baseValue = Object.values(stations[0])[0].value;
-
-    return stations.map(station => {
-        return Object.keys(station).map(operator => {
-            return station[operator].stations.map(stat => {
-                let sustainabilityScore = document.createElement('p');
-                let sustainabilityValue = station[operator].value;
-                sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`;
-
-                insertContent(stat, sustainabilityScore);
-            });
-        });
-    });
 }
