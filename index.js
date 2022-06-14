@@ -45,8 +45,6 @@ io.on('connection', (socket) => {
         const nearbyStationsPerSupplier = await connectStationsToSupplier(sortedEnergySuppliers, sortedStations);
         await connectStationsToDistance(sortedEnergySuppliers, sortedStationsDistance);
 
-        // console.log(nearbyStationsPerDistance)
-
         io.to(users[socket.id]).emit('fill-in-data', nearbyStationsPerSupplier, nearbyStationsPerDistance);
     });
 
@@ -63,17 +61,6 @@ app.get('/', async (req, res) => {
     // console.log(timesData)
     res.render('home')
 });
-
-const getAddressFromCoords = async (stations) => {
-    return await stations.map(station => {
-        return fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${station.coordinates.longitude},${station.coordinates.latitude}.json?access_token=${process.env.API_TOKEN}`)
-            .then(res => res.json())
-            .then(data => {
-                station['address'] = data.features;
-                return station
-            });
-    });
-}
 
 const groupBy = (items, prop) => {
     return items.reduce((out, item) => {
@@ -101,6 +88,39 @@ const getClosestChargingStation = async (coordinates) => {
         .catch(err => console.log(err))
 
     return dataSet;
+}
+
+const renameOperatorStations = stations => {
+    return stations.map(station => {
+        let operatorName = station.operatorName;
+        if (operatorName == 'PitPoint') {
+            station['provider'] = 'TotalGasPower';
+        } else if (operatorName == 'EV-Box') {
+            station['provider'] = 'Engie';
+        } else if (operatorName == 'LastMileSolutions') {
+            station['provider'] = 'Engie';
+        } else if (operatorName == 'Allego' || operatorName == 'Vattenfall') {
+            station['provider'] = 'Vattenfall';
+        } else if (operatorName == 'Community by Shell Recharge' || operatorName == 'Shell Recharge') {
+            station['provider'] = 'EnergieDirect';
+        } else if (operatorName == 'Alfen') {
+            station['provider'] = 'Vandebron';
+        } else if (operatorName == 'E-Flux') {
+            station['provider'] = 'BudgetEnergie';
+        }
+        return station;
+    });
+}
+
+const getAddressFromCoords = async (stations) => {
+    return await stations.map(station => {
+        return fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${station.coordinates.longitude},${station.coordinates.latitude}.json?access_token=${process.env.API_TOKEN}`)
+            .then(res => res.json())
+            .then(data => {
+                station['address'] = data.features;
+                return station
+            });
+    });
 }
 
 // Resource: https://www.geeksforgeeks.org/program-distance-two-points-earth/#:%7E:text=For%20this%20divide%20the%20values,is%20the%20radius%20of%20Earth.
@@ -141,28 +161,6 @@ const getDistanceToStation = (stations, coordinates) => {
         delete station['locationUid'];
         station.distance = await distance(lat1, lat2, lon1, lon2);
 
-        return station;
-    });
-}
-
-const renameOperatorStations = stations => {
-    return stations.map(station => {
-        let operatorName = station.operatorName;
-        if (operatorName == 'PitPoint') {
-            station['provider'] = 'TotalGasPower';
-        } else if (operatorName == 'EV-Box') {
-            station['provider'] = 'Engie';
-        } else if (operatorName == 'LastMileSolutions') {
-            station['provider'] = 'Engie';
-        } else if (operatorName == 'Allego' || operatorName == 'Vattenfall') {
-            station['provider'] = 'Vattenfall';
-        } else if (operatorName == 'Community by Shell Recharge' || operatorName == 'Shell Recharge') {
-            station['provider'] = 'EnergieDirect';
-        } else if (operatorName == 'Alfen') {
-            station['provider'] = 'Vandebron';
-        } else if (operatorName == 'E-Flux') {
-            station['provider'] = 'BudgetEnergie';
-        }
         return station;
     });
 }
