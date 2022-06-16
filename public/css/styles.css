@@ -91,6 +91,10 @@ nav>button>img {
     width: 35%;
 }
 
+#times article:first-of-type {
+    background-color: var(--secondary-color);
+}
+
 #loader article {
     height: 3.5rem;
 }
