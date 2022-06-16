@@ -144,10 +144,14 @@ const insertContent = (station, sustainabilityScore) => {
                     return address.text;
                 }
             }).filter(e => e);
+
+            address.textContent = streetName[0];
+        } else {
+            address.textContent = 'No street name';
         }
 
         // Create content of each charging station
-        address.textContent = streetName[0];
+
         distance.textContent = `${station.distance} meters`;
         button.textContent = 'i';
 
