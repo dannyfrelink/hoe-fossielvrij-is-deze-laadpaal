@@ -247,6 +247,7 @@ const cleanTimeData = (timesData, data) => {
     Object.keys(timesData).map(time => {
         let badMaterial = {};
         let goodMaterial = {};
+
         timesData[time].map(results => {
             if (results._field == 'gas' || results._field == 'coal') {
                 badMaterial[results._value] = results;
@@ -254,26 +255,19 @@ const cleanTimeData = (timesData, data) => {
                 goodMaterial[results._value] = results;
             }
         });
+
         let badMaterialTotal = Object.keys(badMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
         let goodMaterialTotal = Object.keys(goodMaterial).map(Number).reduce((partialSum, a) => partialSum + a, 0);
-        let badMaterialResults = [];
-        Object.values(badMaterial).map(results => {
-            badMaterialResults.push(results);
-        });
+
         let goodMaterialResults = [];
         Object.values(goodMaterial).map(results => {
             goodMaterialResults.push(results);
         });
 
-        let badMaterialObject = { [badMaterialTotal]: badMaterialResults[0]._time };
-        let goodMaterialObject = { [goodMaterialTotal]: goodMaterialResults[0]._time };
+        let totalValue = badMaterialTotal + goodMaterialTotal;
+        let calculate = `${Math.round(goodMaterialTotal / totalValue * 100)}%`;
 
-        let badValue = Number(Object.keys(badMaterialObject)[0]);
-        let goodValue = Number(Object.keys(goodMaterialObject)[0]);
-        let totalValue = badValue + goodValue;
-        let calculate = `${Math.round(goodValue / totalValue * 100)}%`;
-
-        data.push({ [calculate]: Object.values(badMaterialObject)[0] });
+        data.push({ [calculate]: goodMaterialResults[0]._time });
     });
 }
 
