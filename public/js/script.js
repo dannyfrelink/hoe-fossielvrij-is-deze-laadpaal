@@ -136,12 +136,15 @@ const insertContent = (station, sustainabilityScore) => {
         let availability = document.createElement('p');
         let maxPower = document.createElement('p');
         let startRoute = document.createElement('a');
+        let streetName;
 
-        let streetName = station.address.map(address => {
-            if (address.id.includes('address')) {
-                return address.text;
-            }
-        }).filter(e => e);
+        if (station.address) {
+            streetName = station.address.map(address => {
+                if (address.id.includes('address')) {
+                    return address.text;
+                }
+            }).filter(e => e);
+        }
 
         // Create content of each charging station
         address.textContent = streetName[0];
