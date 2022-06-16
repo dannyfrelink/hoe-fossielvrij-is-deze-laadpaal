@@ -234,10 +234,7 @@ const getTimesData = async () => {
     try {
         const rows = await queryApi.collectRows(query);
         const today = new Date();
-        // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         const convertedTimes = rows.map(row => {
-            // var hoursDifference = Math.round(Math.abs(today - new Date(row['_time'])) / 36e5);
-            // console.log(hoursDifference)
             row['_time'] = Math.round(Math.abs(today - new Date(row['_time'])) / 36e5);
             return row;
         });
