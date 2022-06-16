@@ -82,13 +82,14 @@ nav>button>img {
 
 #times {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 #times article {
-    width: 35%;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #times article:first-of-type {
