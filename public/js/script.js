@@ -136,24 +136,14 @@ const insertContent = (station, sustainabilityScore) => {
         let availability = document.createElement('p');
         let maxPower = document.createElement('p');
         let startRoute = document.createElement('a');
-        let streetName;
-
-        console.log(station)
-
-        if (station.address) {
-            streetName = station.address.map(address => {
-                if (address.id.includes('address')) {
-                    return address.text;
-                }
-            }).filter(e => e);
-
-            address.textContent = streetName[0];
-        } else {
-            address.textContent = 'No street name';
-        }
+        let streetName = station.address.map(address => {
+            if (address.id.includes('address')) {
+                return address.text;
+            }
+        }).filter(e => e);
 
         // Create content of each charging station
-
+        address.textContent = streetName[0];
         distance.textContent = `${station.distance} meters`;
         button.textContent = 'i';
 
@@ -176,7 +166,7 @@ const insertContent = (station, sustainabilityScore) => {
         });
 
         // Append children
-        if (streetName && streetName.length > 0) {
+        if (streetName.length > 0) {
             extraInfoContainer.append(operatorName, providerName, sustainabilityScore, availability, maxPower, startRoute);
             chargingStation.append(address, distance, button, extraInfoContainer);
             chargingStations.appendChild(chargingStation);
