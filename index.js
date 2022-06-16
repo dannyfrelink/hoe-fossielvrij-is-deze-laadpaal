@@ -55,10 +55,12 @@ io.on('connection', (socket) => {
 
 app.get('/', async (req, res) => {
     const timesData = await getTimesData();
-    let data = [];
-    await cleanTimeData(timesData, data)
+    let allTimes = [];
+    await cleanTimeData(timesData, allTimes)
+    const bestTimes = allTimes
+        .sort((a, b) => Number(Object.keys(b)[0].split('%')[0]) - Number(Object.keys(a)[0].split('%')[0]))
+        .filter(times => Number(Object.keys(times)[0].split('%')[0]) > 50);
 
-    const bestTimes = data.filter(d => Number(Object.keys(d)[0].split('%')[0]) > 50);
     res.render('home', { bestTimes })
 });
 
@@ -243,7 +245,7 @@ const getTimesData = async () => {
     }
 }
 
-const cleanTimeData = (timesData, data) => {
+const cleanTimeData = (timesData, allTimes) => {
     Object.keys(timesData).map(time => {
         let badMaterial = {};
         let goodMaterial = {};
@@ -267,7 +269,7 @@ const cleanTimeData = (timesData, data) => {
         let totalValue = badMaterialTotal + goodMaterialTotal;
         let calculate = `${Math.round(goodMaterialTotal / totalValue * 100)}%`;
 
-        data.push({ [calculate]: goodMaterialResults[0]._time });
+        allTimes.push({ [calculate]: goodMaterialResults[0]._time });
     });
 }
 
