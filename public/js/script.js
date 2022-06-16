@@ -85,11 +85,6 @@ socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
 
     fillInChargingStationsBySupplier(stationsBySupplier);
     results.textContent = `${resultsAmount} results`;
-
-    radiusFilter.addEventListener('change', () => {
-        fillInChargingStationsBySupplier(stationsBySupplier);
-        results.textContent = `${resultsAmount} results`;
-    });
 });
 
 const fillInChargingStationsByDistance = (stations, value) => {
