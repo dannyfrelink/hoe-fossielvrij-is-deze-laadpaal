@@ -76,6 +76,43 @@ header h2 {
     width: 85%;
 }
 
+#filters label {
+    display: block;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-right: 0.5rem;
+    width: 60%;
+    height: 0.4rem;
+    background: var(--overlay-background-color);
+    border-radius: 0.35rem;
+    background-image: linear-gradient(var(--secondary-color), var(--secondary-color));
+    background-size: 20% 100%;
+    background-repeat: no-repeat;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+}
+
+input[type="number"] {
+    border: unset;
+    border-radius: 0.35rem;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 0.25rem;
+}
+
 #filters>select {
     font-size: 0.9rem;
     text-align: center;

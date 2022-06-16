@@ -4,7 +4,9 @@ const openTimes = document.querySelector('#open_times');
 const openFilters = document.querySelector('#open_filters');
 const filters = document.querySelector('#filters');
 const times = document.querySelector('#times');
-const radiusFilter = document.querySelector('#radius');
+const rangeInput = document.querySelector('input[type="range"]');
+const numberInput = document.querySelector('input[type="number"]');
+numberInput.disabled = true;
 const sortBy = document.querySelector('#sort');
 const errorMessage = document.querySelector('#error_message');
 const chargingStations = document.querySelector('#charging_stations');
@@ -53,9 +55,32 @@ openTimes.addEventListener('click', () => {
     }
 });
 
-radiusFilter.addEventListener('change', () => {
+function changeStylingRangeInput(e) {
+    let target = e.target;
+    numberInput.value = target.value;
+
+    const min = target.min;
+    const max = target.max;
+    const val = target.value;
+
+    target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
+}
+
+rangeInput.addEventListener('input', (e) => {
     chargingStations.textContent = '';
+    let target = e.target;
+    numberInput.value = target.value;
+
+    const min = target.min;
+    const max = target.max;
+    const val = target.value;
+
+    target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
 });
+
+// radiusFilter.addEventListener('change', () => {
+//     chargingStations.textContent = '';
+// });
 
 sortBy.addEventListener('change', () => {
     chargingStations.textContent = '';
@@ -74,7 +99,7 @@ socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
         }
     });
 
-    radiusFilter.addEventListener('change', () => {
+    rangeInput.addEventListener('input', () => {
         if (sortBy.value == 'sustainability') {
             fillInChargingStationsBySupplier(stationsBySupplier);
         } else if (sortBy.value == 'distance') {
@@ -120,7 +145,7 @@ const fillInChargingStationsBySupplier = stations => {
 }
 
 const insertContent = (station, sustainabilityScore) => {
-    if (station.distance < radiusFilter.value) {
+    if (station.distance < rangeInput.value) {
         resultsAmount++;
         let latitude = station.coordinates.latitude;
         let longitude = station.coordinates.longitude;
