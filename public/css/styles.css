@@ -23,6 +23,7 @@ body {
 }
 
 header {
+    position: relative;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid white;
@@ -30,7 +31,7 @@ header {
 
 h1 {
     max-width: 85vw;
-    margin-bottom: 0.75rem;
+    margin: 2.5rem 0 1rem;
 }
 
 nav {
@@ -38,26 +39,26 @@ nav {
     align-items: flex-end;
 }
 
-nav>p {
+nav p {
     margin: 0;
 }
 
-nav>button {
+nav button {
     background-color: unset;
     border: unset;
     padding: 0.2rem 0.25rem 0;
 }
 
-nav>button:first-of-type {
+nav button:first-of-type {
     margin: 0 0.5rem 0 auto;
 }
 
-nav>button.active {
+nav button.active {
     background-color: var(--secondary-color);
     border-radius: 0.35rem;
 }
 
-nav>button>img {
+nav button>img {
     height: 1.5rem;
 }
 
@@ -65,6 +66,14 @@ nav>button>img {
 #filters {
     text-align: center;
     margin-top: 0.75rem;
+}
+
+header h2 {
+    margin: 1rem auto 0.75rem;
+}
+
+#filters h2 {
+    width: 85%;
 }
 
 #filters>select {
@@ -80,16 +89,17 @@ nav>button>img {
     display: block;
 }
 
-#times {
-    width: 100%;
+#times div {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 
 #times article {
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 75%;
+}
+
+#times article:nth-of-type(2n) {
+    justify-self: end;
 }
 
 #times article:first-of-type {

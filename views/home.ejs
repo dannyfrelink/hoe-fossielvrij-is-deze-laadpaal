@@ -20,6 +20,7 @@
         </nav>
 
         <section class="hidden" id="filters">
+            <h2>Select your preferences:</h2>
             <label for="radius">Radius:</label>
             <select name="radius" id="radius">
                 <option value="250">250 meters</option>
@@ -35,13 +36,16 @@
         </section>
 
         <section id="times">
-            <% bestTimes.forEach(function(time) { %>
-                <article>
-                    <p>
-                        <%= Object.values(time)[0] %> hours: <%= Object.keys(time)[0] %>
-                    </p>
-                </article>
-                <% }) %>
+            <h2>Best times for sustainability</h2>
+            <div>
+                <% bestTimes.forEach(function(time) { %>
+                    <article>
+                        <p>
+                            <%= Object.values(time)[0] %> hours: <%= Object.keys(time)[0] %>
+                        </p>
+                    </article>
+                    <% }) %>
+            </div>
         </section>
 
         <p class="hidden" id="error_message"></p>
