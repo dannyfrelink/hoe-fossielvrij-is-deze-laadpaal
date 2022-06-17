@@ -7,7 +7,7 @@ const times = document.querySelector('#times');
 const rangeInput = document.querySelector('input[type="range"]');
 const numberInput = document.querySelector('input[type="number"]');
 numberInput.disabled = true;
-const sortBy = document.querySelector('#sort');
+const sortInputs = document.querySelectorAll('input[type="radio"]');
 const errorMessage = document.querySelector('#error_message');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
@@ -78,12 +78,10 @@ rangeInput.addEventListener('input', (e) => {
     target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
 });
 
-// radiusFilter.addEventListener('change', () => {
-//     chargingStations.textContent = '';
-// });
-
-sortBy.addEventListener('change', () => {
-    chargingStations.textContent = '';
+sortInputs.forEach(input => {
+    input.addEventListener('change', () => {
+        chargingStations.textContent = '';
+    });
 });
 
 let resultsAmount = 0;
@@ -91,18 +89,21 @@ socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
     chargingStations.classList.remove('hidden');
     loaderSection.classList.add('hidden');
 
-    sortBy.addEventListener('change', () => {
-        if (sortBy.value == 'sustainability') {
-            fillInChargingStationsBySupplier(stationsBySupplier);
-        } else if (sortBy.value == 'distance') {
-            fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
-        }
+    sortInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            const checkedInput = e.target.id;
+            if (checkedInput == 'sustainability') {
+                fillInChargingStationsBySupplier(stationsBySupplier);
+            } else if (checkedInput == 'distance') {
+                fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
+            }
+        });
     });
 
     rangeInput.addEventListener('input', () => {
-        if (sortBy.value == 'sustainability') {
+        if (sortInputs[0].checked) {
             fillInChargingStationsBySupplier(stationsBySupplier);
-        } else if (sortBy.value == 'distance') {
+        } else if (sortInputs[1].checked) {
             fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
         }
         results.textContent = `${resultsAmount} results`;
