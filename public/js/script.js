@@ -76,6 +76,13 @@ rangeInput.addEventListener('input', (e) => {
     const val = target.value;
 
     target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
+    let setSliderSize = Number(target.style.backgroundSize.split('%')[0]) / 50 * 1;
+    if (setSliderSize === 0) {
+        setSliderSize = 0.5;
+    } else if (setSliderSize === 0.4) {
+        setSliderSize = 0.65;
+    }
+    rangeInput.style.setProperty('--slider-size', `${setSliderSize}rem`)
 });
 
 sortInputs.forEach(input => {
