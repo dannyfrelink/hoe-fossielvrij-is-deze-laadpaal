@@ -2,7 +2,6 @@
     --background-color: #080D55;
     --overlay-background-color: #3851A2;
     --secondary-color: #02958A;
-
     --slider-size: 0.65rem;
 }
 
@@ -121,7 +120,6 @@ input[type="number"] {
     background-color: var(--overlay-background-color);
     width: 76%;
     margin: 0.5rem auto;
-    border: 1.5px solid var(--secondary-color);
     border-radius: 0.35rem;
 }
 
@@ -132,6 +130,7 @@ input[type="number"] {
 
 #sort input[type="radio"]:checked+label {
     background-color: var(--secondary-color);
+    border-radius: 0.35rem;
 }
 
 #sort label {
@@ -153,7 +152,7 @@ input[type="number"] {
 }
 
 #times article:first-of-type {
-    background-color: var(--secondary-color);
+    border: 2.5px solid var(--secondary-color);
 }
 
 #loader article {
