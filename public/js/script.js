@@ -66,8 +66,12 @@ function changeStylingRangeInput(e) {
     target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
 }
 
+// rangeInput.addEventListener('input', () => {
+//     chargingStations.textContent = '';
+// });
+
 rangeInput.addEventListener('input', (e) => {
-    chargingStations.textContent = '';
+    // chargingStations.textContent = '';
     let target = e.target;
     numberInput.value = target.value;
 
@@ -85,19 +89,14 @@ rangeInput.addEventListener('input', (e) => {
     rangeInput.style.setProperty('--slider-size', `${setSliderSize}rem`)
 });
 
-sortInputs.forEach(input => {
-    input.addEventListener('change', () => {
-        chargingStations.textContent = '';
-    });
-});
-
 let resultsAmount = 0;
 socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
     chargingStations.classList.remove('hidden');
     loaderSection.classList.add('hidden');
 
     sortInputs.forEach(input => {
-        input.addEventListener('change', (e) => {
+        input.addEventListener('click', (e) => {
+            chargingStations.textContent = '';
             const checkedInput = e.target.id;
             if (checkedInput == 'sustainability') {
                 fillInChargingStationsBySupplier(stationsBySupplier);
@@ -108,6 +107,7 @@ socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
     });
 
     rangeInput.addEventListener('input', () => {
+        chargingStations.textContent = '';
         if (sortInputs[0].checked) {
             fillInChargingStationsBySupplier(stationsBySupplier);
         } else if (sortInputs[1].checked) {

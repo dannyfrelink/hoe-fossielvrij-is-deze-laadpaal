@@ -201,8 +201,9 @@ const connectStationsToSupplier = (suppliers, stations) => {
     }).filter(e => e);
 }
 
-const nearbyStationsPerDistance = [];
+let nearbyStationsPerDistance = [];
 const connectStationsToDistance = (suppliers, stations) => {
+    nearbyStationsPerDistance = [];
     Object.values(stations).map(station => {
         station.map(stat => {
             suppliers.map(supplier => {
