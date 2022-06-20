@@ -23,6 +23,43 @@ body {
     margin: 2rem auto;
 }
 
+#zero_state {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(77.5vh);
+}
+
+#zero_state::after {
+    position: absolute;
+    right: 0;
+    left: 15%;
+    top: 1rem;
+    bottom: 0;
+    content: '';
+    background-image: url('/images/electric-car2.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+#zero_state h1 {
+    margin: 0.5rem 0 0;
+}
+
+#zero_state a {
+    display: block;
+    font-size: 1.25rem;
+    text-decoration: none;
+    width: fit-content;
+    color: white;
+    background-color: var(--secondary-color);
+    border-radius: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    margin-top: 2rem;
+}
+
 header {
     position: relative;
     margin-bottom: 1rem;
@@ -31,6 +68,7 @@ header {
 }
 
 h1 {
+    font-size: 2em;
     max-width: 85vw;
     margin: 2.5rem 0 1rem;
 }

@@ -53,7 +53,11 @@ io.on('connection', (socket) => {
     });
 });
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
+    res.render('home')
+})
+
+app.get('/search', async (req, res) => {
     const timesData = await getTimesData();
     let allTimes = [];
     await cleanTimeData(timesData, allTimes)
@@ -61,7 +65,7 @@ app.get('/', async (req, res) => {
         .sort((a, b) => Number(Object.keys(b)[0].split('%')[0]) - Number(Object.keys(a)[0].split('%')[0]))
         .filter(times => Number(Object.keys(times)[0].split('%')[0]) > 50);
 
-    res.render('home', { bestTimes })
+    res.render('search', { bestTimes })
 });
 
 const groupBy = (items, prop) => {

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('layout/head'); %>
+</head>
+
+<body>
+    <header>
+        <h1>Sustainable Charge</h1>
+
+        <nav>
+            <p id="results">... results</p>
+            <button class="active" id="open_times">
+                <img src="images/clock-icon.png" alt="Clock icon">
+            </button>
+            <button id="open_filters">
+                <img src="images/filter-icon.png" alt="Filter icon">
+            </button>
+        </nav>
+
+        <section class="hidden" id="filters">
+            <h2>Select your preferences</h2>
+
+            <label for="radius">Radius in meters:</label>
+            <input id="radius" type="range" min="250" max="1500" step="250" value="500">
+            <input type="number" min="250" max="1500" step="250" value="500">
+
+            <label for="sort">Sort by:</label>
+            <div id="sort">
+                <input type="radio" name="sort" id="sustainability" checked>
+                <label for="sustainability">Sustainability</label>
+                <input type="radio" name="sort" id="distance">
+                <label for="distance">Distance</label>
+            </div>
+        </section>
+
+        <section id="times">
+            <h2>Best times for sustainability</h2>
+            <div>
+                <% bestTimes.forEach(function(time) { %>
+                    <article>
+                        <p>
+                            <%= Object.values(time)[0] %> hours: <%= Object.keys(time)[0] %>
+                        </p>
+                    </article>
+                    <% }) %>
+            </div>
+        </section>
+
+        <p class="hidden" id="error_message"></p>
+    </header>
+
+    <section id="loader">
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+    </section>
+    <section id="charging_stations" class="hidden"></section>
+</body>
+
+</html>
