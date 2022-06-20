@@ -219,7 +219,7 @@ if (window.location.pathname == '/search') {
             // Open and close extra info of article
             chargingStation.addEventListener('click', (e) => {
                 let clickHeight = window.innerHeight - e.clientY;
-                if (clickHeight < 250) {
+                if (clickHeight < 250 && extraInfoContainer.classList.contains('hidden')) {
                     let targetElement = e.target
                     if (targetElement.nodeName.toLowerCase() !== 'article') {
                         targetElement = e.target.parentElement
