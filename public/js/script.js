@@ -137,14 +137,32 @@ const fillInChargingStationsByDistance = (stations, value) => {
 
 const fillInChargingStationsBySupplier = stations => {
     resultsAmount = 0;
-    const baseValue = Object.values(stations[0])[0].value;
+    // const baseValue = Object.values(stations[0])[0].value;
+
+    const totalValues = [];
+    const totalStations = [];
+    Object.values(stations).map(providers => {
+        Object.values(providers).map(values => {
+            totalValues.push(values.value * values.stations.length);
+            totalStations.push(values.stations.length)
+        });
+    });
+    const averageValue = totalValues.reduce((a, b) => a + b, 0) / totalStations.reduce((a, b) => a + b, 0);
 
     return stations.map(station => {
         return Object.keys(station).map(operator => {
             return station[operator].stations.map(stat => {
                 let sustainabilityScore = document.createElement('p');
+                sustainabilityScore.textContent = 'Sustainability score: ';
                 let sustainabilityValue = station[operator].value;
-                sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`;
+
+                if (sustainabilityValue > averageValue) {
+                    sustainabilityScore.classList.add('bad_sustainability');
+                } else if (sustainabilityValue <= averageValue) {
+                    sustainabilityScore.classList.add('good_sustainability');
+                }
+
+                // sustainabilityScore.textContent = `Sustainability score: ${Math.round(baseValue / sustainabilityValue * 100)}%`;
 
                 insertContent(stat, sustainabilityScore);
             });
@@ -200,8 +218,8 @@ const insertContent = (station, sustainabilityScore) => {
 
         // Append children
         if (streetName.length > 0) {
-            extraInfoContainer.append(operatorName, providerName, sustainabilityScore, availability, maxPower, startRoute);
-            chargingStation.append(address, distance, button, extraInfoContainer);
+            extraInfoContainer.append(operatorName, providerName, availability, maxPower, startRoute);
+            chargingStation.append(address, distance, sustainabilityScore, button, extraInfoContainer);
             chargingStations.appendChild(chargingStation);
         }
         return chargingStations;
