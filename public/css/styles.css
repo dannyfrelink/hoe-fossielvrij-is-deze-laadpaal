@@ -106,8 +106,25 @@ nav button>img {
     height: 1.5rem;
 }
 
+@keyframes fadeInFiltersAndTimes {
+    0% {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
 #times,
 #filters {
+    animation-name: fadeInFiltersAndTimes;
+    animation-duration: 1s;
     text-align: center;
     margin-top: 0.75rem;
 }
@@ -214,6 +231,21 @@ article {
     margin-bottom: 0.8rem;
     padding: 0.75rem 1rem 0.65rem;
     border-radius: 0.35rem;
+}
+
+@keyframes fadeInStations {
+    0% {
+        transform: translateY(5rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#charging_stations {
+    animation-name: fadeInStations;
+    animation-duration: 0.5s;
 }
 
 #charging_stations article>p:first-of-type {
