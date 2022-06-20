@@ -27,14 +27,14 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(77.5vh);
+    height: calc(83vh);
 }
 
 #zero_state::after {
     position: absolute;
     right: 0;
     left: 15%;
-    top: 1rem;
+    top: 4.5rem;
     bottom: 0;
     content: '';
     background-image: url('/images/electric-car2.png');

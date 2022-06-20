@@ -1,4 +1,4 @@
-if (window.location == '/search') {
+if (window.location.pathname == '/search') {
     const socket = io();
     const results = document.querySelector('#results');
     const openTimes = document.querySelector('#open_times');
@@ -236,4 +236,3 @@ if (window.location == '/search') {
         }
     }
 }
-
