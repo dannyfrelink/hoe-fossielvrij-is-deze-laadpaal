@@ -218,6 +218,17 @@ if (window.location.pathname == '/search') {
 
             // Open and close extra info of article
             chargingStation.addEventListener('click', (e) => {
+                let clickHeight = window.innerHeight - e.clientY;
+                if (clickHeight < 250) {
+                    let targetElement = e.target
+                    if (targetElement.nodeName.toLowerCase() !== 'article') {
+                        targetElement = e.target.parentElement
+                    }
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
                 if (e.target.tagName.toLowerCase() !== 'a') {
                     extraInfoContainer.classList.toggle('hidden');
                 }
