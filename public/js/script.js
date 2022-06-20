@@ -150,6 +150,7 @@ const fillInChargingStationsByDistance = (stations, value) => {
 
 const fillInChargingStationsBySupplier = stations => {
     resultsAmount = 0;
+
     let totalValues = [];
     let totalStations = [];
     Object.values(stations).map(providers => {
