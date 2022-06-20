@@ -240,7 +240,10 @@ const getTimesData = async () => {
         const rows = await queryApi.collectRows(query);
         const today = new Date();
         const convertedTimes = rows.map(row => {
-            row['_time'] = Math.round(Math.abs(today - new Date(row['_time'])) / 36e5);
+            row['_time'] = Math.round(Math.abs(today - new Date(row['_time'])) / 36e5) - 2;
+            if (row['_time'] === 0) {
+                row['_time'] = 'Now'
+            }
             return row;
         });
         const data = groupBy(convertedTimes, "_time");
