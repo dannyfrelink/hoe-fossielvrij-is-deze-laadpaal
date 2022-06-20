@@ -257,7 +257,7 @@ const cleanTimeData = (timesData, allTimes) => {
         let goodMaterial = {};
 
         timesData[time].map(results => {
-            if (results._field == 'gas' || results._field == 'coal') {
+            if (results._field == 'gas' || results._field == 'coal' || results._field == 'oil') {
                 badMaterial[results._value] = results;
             } else {
                 goodMaterial[results._value] = results;
