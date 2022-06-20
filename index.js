@@ -63,7 +63,7 @@ app.get('/search', async (req, res) => {
     await cleanTimeData(timesData, allTimes)
     const bestTimes = allTimes
         .sort((a, b) => Number(Object.keys(b)[0].split('%')[0]) - Number(Object.keys(a)[0].split('%')[0]))
-        .filter(times => Number(Object.keys(times)[0].split('%')[0]) > 50);
+        .slice(0, 4);
 
     res.render('search', { bestTimes })
 });
