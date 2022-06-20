@@ -12,6 +12,7 @@ if (window.location.pathname == '/search') {
     const errorMessage = document.querySelector('#error_message');
     const chargingStations = document.querySelector('#charging_stations');
     const loaderSection = document.querySelector('#loader');
+    const loaderText = document.querySelector('#loader_text');
 
     const getLocation = () => {
         if (navigator.geolocation) {
@@ -94,6 +95,7 @@ if (window.location.pathname == '/search') {
     socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {
         chargingStations.classList.remove('hidden');
         loaderSection.classList.add('hidden');
+        loaderText.classList.add('hidden');
 
         sortInputs.forEach(input => {
             input.addEventListener('click', (e) => {

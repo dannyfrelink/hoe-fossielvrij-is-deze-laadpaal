@@ -27,7 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(83vh);
+    height: calc(80vh);
 }
 
 #zero_state::after {
@@ -50,14 +50,14 @@ body {
 
 #zero_state a {
     display: block;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     text-decoration: none;
     width: fit-content;
     color: white;
     background-color: var(--secondary-color);
     border-radius: 0.35rem;
-    padding: 0.5rem 0.75rem;
-    margin-top: 2rem;
+    padding: 0.4rem 0.6rem;
+    margin-top: 1.5rem;
 }
 
 header {
@@ -70,12 +70,17 @@ header {
 h1 {
     font-size: 2em;
     max-width: 85vw;
-    margin: 2.5rem 0 1rem;
+    margin: 2.5rem 0 0;
+}
+
+h1+p {
+    margin-top: 0.5rem;
 }
 
 nav {
     display: flex;
     align-items: flex-end;
+    margin-top: 1rem;
 }
 
 nav p {
