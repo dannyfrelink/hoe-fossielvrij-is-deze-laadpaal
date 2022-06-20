@@ -68,12 +68,7 @@ if (window.location.pathname == '/search') {
         target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
     }
 
-    // rangeInput.addEventListener('input', () => {
-    //     chargingStations.textContent = '';
-    // });
-
     rangeInput.addEventListener('input', (e) => {
-        // chargingStations.textContent = '';
         let target = e.target;
         numberInput.value = target.value;
 
