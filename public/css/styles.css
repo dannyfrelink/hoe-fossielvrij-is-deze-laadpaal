@@ -221,25 +221,6 @@ input[type="number"] {
     font-weight: bold;
 }
 
-/* #times div { */
-/* display: grid;
-    grid-template-columns: repeat(2, 1fr); */
-/* text-align: center; */
-/* } */
-
-/* #times article {
-
-    width: 75%;
-} */
-
-/* #times article:nth-of-type(2n) {
-    justify-self: end;
-} */
-
-/* #times article:first-of-type {
-    border: 2.5px solid var(--secondary-color);
-} */
-
 #loader article {
     height: 3.5rem;
 }
