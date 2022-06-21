@@ -7,7 +7,8 @@ if (window.location.pathname == '/search') {
     const times = document.querySelector('#times');
     const rangeInput = document.querySelector('input[type="range"]');
     const numberInput = document.querySelector('input[type="number"]');
-    const sortInputs = document.querySelectorAll('input[type="radio"]');
+    const sortInputs = document.querySelectorAll('#filters div:first-of-type input[type="radio"]');
+    const sortInputsAvailability = document.querySelectorAll('#filters div:nth-of-type(2) input[type="radio"]');
     const errorMessage = document.querySelector('#error_message');
     const chargingStations = document.querySelector('#charging_stations');
     const loaderSection = document.querySelector('#loader');
@@ -100,14 +101,30 @@ if (window.location.pathname == '/search') {
         loaderSection.classList.add('hidden');
         loaderText.classList.add('hidden');
 
+        let sortedSupplierStations = changeSupplierOnAvailibitlySort(stationsBySupplier);
+        let sortedDistanceStations = changeDistanceOnAvailibitlySort(stationsByDistance);
+
+        sortInputsAvailability.forEach(input => {
+            input.addEventListener('click', () => {
+                chargingStations.textContent = '';
+                sortedSupplierStations = changeSupplierOnAvailibitlySort(stationsBySupplier);
+                sortedDistanceStations = changeDistanceOnAvailibitlySort(stationsByDistance);
+                if (sortInputs[0].checked) {
+                    fillInChargingStationsBySupplier(sortedSupplierStations);
+                } else if (sortInputs[1].checked) {
+                    fillInChargingStationsByDistance(sortedDistanceStations, sortedSupplierStations);
+                }
+            })
+        })
+
         sortInputs.forEach(input => {
             input.addEventListener('click', (e) => {
                 chargingStations.textContent = '';
-                const checkedInput = e.target.id;
+                const checkedInput = e.target.id
                 if (checkedInput == 'sustainability') {
-                    fillInChargingStationsBySupplier(stationsBySupplier);
+                    fillInChargingStationsBySupplier(sortedSupplierStations);
                 } else if (checkedInput == 'distance') {
-                    fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
+                    fillInChargingStationsByDistance(sortedDistanceStations, sortedSupplierStations);
                 }
             });
         });
@@ -115,16 +132,63 @@ if (window.location.pathname == '/search') {
         rangeInput.addEventListener('input', () => {
             chargingStations.textContent = '';
             if (sortInputs[0].checked) {
-                fillInChargingStationsBySupplier(stationsBySupplier);
+                fillInChargingStationsBySupplier(sortedSupplierStations);
             } else if (sortInputs[1].checked) {
-                fillInChargingStationsByDistance(stationsByDistance, stationsBySupplier);
+                fillInChargingStationsByDistance(sortedDistanceStations, sortedSupplierStations);
             }
             results.textContent = `${resultsAmount} results`;
         });
 
-        fillInChargingStationsBySupplier(stationsBySupplier);
+        fillInChargingStationsBySupplier(sortedSupplierStations);
         results.textContent = `${resultsAmount} results`;
     });
+
+    const changeSupplierOnAvailibitlySort = (stationsBySupplier) => {
+        let stationsSupplierAvailability = [];
+        stationsBySupplier.map(providers => {
+            return Object.keys(providers).map(provider => {
+                stationsSupplierAvailability.push({
+                    [provider]: {
+                        'value': providers[provider].value,
+                        'stations': providers[provider].stations.filter(station => {
+                            if (sortInputsAvailability[0].checked) {
+                                return station.status === 'Available'
+                            } else if (sortInputsAvailability[1].checked) {
+                                return station;
+                            }
+                        })
+                    }
+                });
+            });
+        });
+
+        return stationsSupplierAvailability;
+    }
+
+    const changeDistanceOnAvailibitlySort = (stationsByDistance) => {
+        let stationsDistanceAvailability = [];
+        stationsByDistance.map(distances => {
+            return Object.keys(distances).filter(distance => {
+                if (sortInputsAvailability[0].checked && distances[distance].stations.status === 'Available') {
+                    stationsDistanceAvailability.push({
+                        [distance]: {
+                            'value': distances[distance].value,
+                            'stations': distances[distance].stations
+                        }
+                    })
+                } else if (sortInputsAvailability[1].checked) {
+                    stationsDistanceAvailability.push({
+                        [distance]: {
+                            'value': distances[distance].value,
+                            'stations': distances[distance].stations
+                        }
+                    })
+                }
+            });
+        });
+
+        return stationsDistanceAvailability;
+    }
 
     const fillInChargingStationsByDistance = (stations, value) => {
         resultsAmount = 0;

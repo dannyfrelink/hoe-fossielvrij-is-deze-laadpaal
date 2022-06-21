@@ -125,7 +125,6 @@ nav button>img {
 #filters {
     animation-name: fadeInFiltersAndTimes;
     animation-duration: 1s;
-    /* text-align: center; */
     margin-top: 0.75rem;
 }
 
@@ -172,7 +171,7 @@ input[type="number"] {
     padding: 0.25rem;
 }
 
-#sort {
+#filters div {
     display: flex;
     text-align: center;
     background-color: var(--overlay-background-color);
@@ -181,17 +180,21 @@ input[type="number"] {
     border-radius: 0.35rem;
 }
 
-#sort input[type="radio"] {
+#filters div+div {
+    margin-top: 0.75rem;
+}
+
+#filters div input[type="radio"] {
     position: absolute;
     visibility: hidden;
 }
 
-#sort input[type="radio"]:checked+label {
+#filters div input[type="radio"]:checked+label {
     background-color: var(--secondary-color);
     border-radius: 0.35rem;
 }
 
-#sort label {
+#filters div label {
     width: 50%;
     padding: 0.25rem 0;
 }
@@ -205,8 +208,8 @@ input[type="number"] {
 }
 
 #times div {
-    /* display: grid; */
-    /* grid-template-columns: repeat(2, 1fr); */
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
     text-align: center;
 }
 
