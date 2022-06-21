@@ -27,7 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(80vh);
+    height: 33.5rem;
 }
 
 #zero_state::after {
