@@ -76,11 +76,20 @@ if (window.location.pathname == '/search') {
         const val = target.value;
 
         target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
-        let setSliderSize = Number(target.style.backgroundSize.split('%')[0]) / 50 * 1;
+
+        let setSliderSize = Number(target.style.backgroundSize.split('%')[0]) / 50;
         if (setSliderSize === 0) {
-            setSliderSize = 0.5;
+            setSliderSize = 1;
         } else if (setSliderSize === 0.4) {
-            setSliderSize = 0.65;
+            setSliderSize = 1.2;
+        } else if (setSliderSize === 0.8) {
+            setSliderSize = 1.4;
+        } else if (setSliderSize === 1.2) {
+            setSliderSize = 1.6;
+        } else if (setSliderSize === 1.6) {
+            setSliderSize = 1.8;
+        } else if (setSliderSize === 2) {
+            setSliderSize = 2;
         }
         rangeInput.style.setProperty('--slider-size', `${setSliderSize}rem`)
     });

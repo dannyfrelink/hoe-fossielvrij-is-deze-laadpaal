@@ -2,7 +2,7 @@
     --background-color: #080D55;
     --overlay-background-color: #3851A2;
     --secondary-color: #02958A;
-    --slider-size: 0.65rem;
+    --slider-size: 1.2rem;
 }
 
 body::before {
