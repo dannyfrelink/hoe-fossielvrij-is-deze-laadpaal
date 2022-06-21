@@ -114,7 +114,8 @@ if (window.location.pathname == '/search') {
                 } else if (sortInputs[1].checked) {
                     fillInChargingStationsByDistance(sortedDistanceStations, sortedSupplierStations);
                 }
-            })
+                results.textContent = `${resultsAmount} results`;
+            });
         })
 
         sortInputs.forEach(input => {
