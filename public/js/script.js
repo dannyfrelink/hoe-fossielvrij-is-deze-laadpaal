@@ -7,7 +7,6 @@ if (window.location.pathname == '/search') {
     const times = document.querySelector('#times');
     const rangeInput = document.querySelector('input[type="range"]');
     const numberInput = document.querySelector('input[type="number"]');
-    numberInput.disabled = true;
     const sortInputs = document.querySelectorAll('input[type="radio"]');
     const errorMessage = document.querySelector('#error_message');
     const chargingStations = document.querySelector('#charging_stations');
