@@ -4,15 +4,15 @@ Charge your electric vehicle more sustainable by using Sustainable Charge. A web
 
 ## 📋 Table of Contents
 
-- [Motive](https://github.com/dannyfrelink/sustainable-charging#motive)
-- [Assignment](https://github.com/dannyfrelink/sustainable-charging#assignment)
+- [💭 Motive](https://github.com/dannyfrelink/sustainable-charging#motive)
+- [📨 Assignment](https://github.com/dannyfrelink/sustainable-charging#assignment)
     * [User Stories](https://github.com/dannyfrelink/sustainable-charging#user-stories)
-- [Concept](https://github.com/dannyfrelink/sustainable-charging#concept)
-- [API](https://github.com/dannyfrelink/sustainable-charging#api)
-- [Process (Wiki)](https://github.com/dannyfrelink/sustainable-charging#%EF%B8%8F-process-wiki)
-- [Wishlist](https://github.com/dannyfrelink/sustainable-charging#-wishlist)
-- [Installation](https://github.com/dannyfrelink/sustainable-charging#-installation)
-- [License](https://github.com/dannyfrelink/sustainable-charging#-license)
+- [💡 Concept](https://github.com/dannyfrelink/sustainable-charging#concept)
+- [💻 API](https://github.com/dannyfrelink/sustainable-charging#api)
+- [⚙️ Process (Wiki)](https://github.com/dannyfrelink/sustainable-charging#%EF%B8%8F-process-wiki)
+- [📝 Wishlist](https://github.com/dannyfrelink/sustainable-charging#-wishlist)
+- [🔧 Installation](https://github.com/dannyfrelink/sustainable-charging#-installation)
+- [📄 License](https://github.com/dannyfrelink/sustainable-charging#-license)
 
 ## 💭 Motive
 
