@@ -2,15 +2,15 @@
 
 ## 📋 Table of Contents
 
-- [Motive]()
-- [Assignment]()
-    * [User Stories]()
-- [Concept]()
-- [API]()
-- [Process (Wiki)]()
-- [Wishlist]()
-- [Installation]()
-- [License]()
+- [Motive](https://github.com/dannyfrelink/sustainable-charging#motive)
+- [Assignment](https://github.com/dannyfrelink/sustainable-charging#assignment)
+    * [User Stories](https://github.com/dannyfrelink/sustainable-charging#user-stories)
+- [Concept](https://github.com/dannyfrelink/sustainable-charging#concept)
+- [API](https://github.com/dannyfrelink/sustainable-charging#api)
+- [Process (Wiki)](https://github.com/dannyfrelink/sustainable-charging#%EF%B8%8F-process-wiki)
+- [Wishlist](https://github.com/dannyfrelink/sustainable-charging#-wishlist)
+- [Installation](https://github.com/dannyfrelink/sustainable-charging#-installation)
+- [License](https://github.com/dannyfrelink/sustainable-charging#-license)
 
 ## Motive
 
@@ -44,7 +44,7 @@ As an electric driver, I would like to know when the least fossil electricity co
 
 ## ⚙️ Process (Wiki)
 
-You can find all the progression of my work documented in my [Wiki]().
+You can find all the progression of my work documented in my [Wiki](https://github.com/dannyfrelink/sustainable-charging/wiki/Proces).
 
 ## 📝 Wishlist
 
@@ -56,4 +56,4 @@ You can find all the progression of my work documented in my [Wiki]().
 
 ## 📄 License
 
-I have used the [MIT License]() for this repository.
+I have used the [MIT License](https://github.com/dannyfrelink/sustainable-charging/blob/main/LICENSE) for this repository.
