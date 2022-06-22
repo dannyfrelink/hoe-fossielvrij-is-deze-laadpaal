@@ -284,19 +284,24 @@ article>button {
 .good_sustainability::after {
     content: '';
     position: absolute;
-    top: 0.175rem;
-    right: -1.4rem;
-    width: 1rem;
-    height: 1rem;
+    top: 0.1rem;
+    right: -1.75rem;
+    width: 1.25rem;
+    height: 1.25rem;
     border-radius: 1rem;
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .bad_sustainability::after {
     background-color: red;
+    background-image: url('/images/factory-icon.png');
 }
 
 .good_sustainability::after {
     background-color: green;
+    background-image: url('/images/tree-icon.png');
 }
 
 #extra_info_container {
