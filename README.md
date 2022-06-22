@@ -58,11 +58,17 @@ Landing page        |  Best times
 :------------------:|:------------------:
 ![Landing page](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-landing-page.png) | ![Best times](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-best-times.png)
 
-
-
 ## API
 
+The client provided us with multiple API's we could use. I decided I wanted to try and connect multiple API's with each other to create the most complete dataset. I also found an API which I wanted to use myself. Here are all the API's I decided to use for my application.
 
+* I started off by using the [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) to gain access to the location of the user. This way, I was able to get their latitude and longitude (if they agreed to share their location).
+
+* Thanks to coordinates of the user, I was able to search for all charging stations in their area. I used the Shell [B2B EV Locations API](https://developer.shell.com/api-catalog/v1.0.1/b2b-ev-locations) and added the coordinates to the url of the fetch. By adding '15' at the end of the url, I chose the zoom level of my search (15 === 'Streets').
+
+* With all the charging stations in my hand, I had access to the coordinates of all stations. Sadly, the address of the stations wasn't a part of the data. To convert the coordinates of the stations to an address, I used the Mapbox [Geocoding API](https://docs.mapbox.com/api/search/geocoding/#reverse-geocoding).
+
+* To gain access to the sustainability per energy provider and best times to charge, I used two of the API's provided by The Green Caravan. They were inside data from a InfluxDB which they gave us access to. The [Energy Provider API](https://codesandbox.io/s/gc-providers-65hd8r) showed us the amount of CO2 emission per energy provider. The [ElectricityMap API](https://app.electricitymap.org/zone/NL) showed us how the electricity was split up (how much solar, hydro, oil, etc.).
 
 ## ⚙️ Process (Wiki)
 
