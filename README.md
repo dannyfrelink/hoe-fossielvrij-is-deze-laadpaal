@@ -36,6 +36,26 @@ As an electric driver, I would like to know when the least fossil electricity co
 
 ## Concept
 
+All the user stories above are kind of similar. Therefore, I wanted to try and target as many as possible to make a complete web application. The client wanted to see as many different prototypes as possible to get the most ideas for the future. Most of my fellow students were creating some sort of a map, so I tried to stay clear of that option. 
+
+I chose to create a list with all charging stations in your area (with a max distance of 1500 meters). In this list, you can see the street of the station, how many meters away it is and the sustainability of it right now. By clicking on a station you get some extra information of it. You get to see the station operator, the energy provider, the current status and the maximum charging power. You can start navigating to the station with the button at the end of the extra information.
+
+Articles closed        |  Articles open
+:---------------------:|:---------------------:
+![Articles closed](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-articles-close.png) | ![Articles open](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-articles-open.png)
+
+With the basics all done, I started working on some extra features of my application. I wanted to implement some preference options to make the user create their own content. Firstly, they can choose what the maximum distance is they want to travel to the stations (default 500 meters). Secondly, can filter out all the stations that are currently unavailable (default all). Finally, they can sort the content by sustainability or distance (default sustainability).
+
+Filters default        |  Filters adjusted     
+:---------------------:|:---------------------:
+![Filters default](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-filters-1.png) | ![Filters adjusted](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-filters-2.png)
+
+With all the preference options complete, I wanted to delph into the data of the best times to charge. I calculated the times with the most green electricity and filtered out the four highest values. I opened this tab on load and added some motivational text to make the user more aware of the situation. Also, I wanted to introduce the users with my application. To do so, I added a landing page with some textual explanation of it. The user will have to click on the button to start searching for stations in their area.
+
+Landing page        |  Best times    
+:------------------:|:------------------:
+![Landing page](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-landing-page.png) | ![Best times](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-best-times.png)
+
 
 
 ## API
@@ -48,11 +68,27 @@ You can find all the progression of my work documented in my [Wiki](https://gith
 
 ## 📝 Wishlist
 
-
+I've been keeping my wishlist inside my [Issues](https://github.com/dannyfrelink/sustainable-charging/issues) tab of this repository. Everytime I finished working on one of the issues, I closed this issue to make sure to keep my wishlist clean. Sadly, I wasn't able to complete all the things on my wishlist, since it kept growing and growing during the weeks. Therefore, I had to make choices of what to do and what not to do. Everything still on the list was chosen to leave for now.
 
 ## 🔧 Installation
 
+If you want to use my code for your own, you can clone the repository as a local file:
 
+```
+    git clone https://github.com/dannyfrelink/sustainable-charging
+```
+
+You then need to install all NPM packages:
+
+```
+    npm install
+```
+
+Now you're able to start working with my project. Simply run the following line in your terminal:
+
+```
+    npm run dev
+```
 
 ## 📄 License
 
