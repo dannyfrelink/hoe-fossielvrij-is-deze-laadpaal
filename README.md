@@ -2,15 +2,15 @@
 
 ## 📋 Table of Contents
 
-* [Motive]()
-* [Assignment]()
-- [User Stories]()
-* [Concept]()
-* [API]()
-* [Process (Wiki)]()
-* [Wishlist]()
-* [Installation]()
-* [License]()
+- [Motive]()
+- [Assignment]()
++ [User Stories]()
+- [Concept]()
+- [API]()
+- [Process (Wiki)]()
+- [Wishlist]()
+- [Installation]()
+- [License]()
 
 ## Motive
 
