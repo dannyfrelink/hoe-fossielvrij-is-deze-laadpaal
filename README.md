@@ -98,6 +98,12 @@ Now you're able to start working with my project. Simply run the following line 
     npm run dev
 ```
 
+To update your application on save, open up another terminal. Run the following line in this terminal:
+
+```
+    npm run watch
+```
+
 ## 📄 License
 
 I have used the [MIT License](https://github.com/dannyfrelink/sustainable-charging/blob/main/LICENSE) for this repository.
