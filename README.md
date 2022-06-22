@@ -42,7 +42,7 @@ I chose to create a list with all charging stations in your area (with a max dis
 
 Articles closed        |  Articles open
 :---------------------:|:---------------------:
-![Articles closed](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-articles-close.png) | ![Articles open](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-articles-open.png)
+![Articles closed](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-articles-close-2.png) | ![Articles open](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-articles-open-2.png)
 
 With the basics all done, I started working on some extra features of my application. I wanted to implement some preference options to make the user create their own content. Firstly, they can choose what the maximum distance is they want to travel to the stations (default 500 meters). Secondly, can filter out all the stations that are currently unavailable (default all). Finally, they can sort the content by sustainability or distance (default sustainability).
 
