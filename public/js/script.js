@@ -14,8 +14,6 @@ if (window.location.pathname == '/search') {
     const loaderSection = document.querySelector('#loader');
     const loaderText = document.querySelector('#loader_text');
 
-    console.log(sortInputs)
-
     const getLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -274,6 +272,11 @@ if (window.location.pathname == '/search') {
                     return address.text;
                 }
             }).filter(e => e);
+
+            // Give faded out look to unavailable stations
+            if (station.status !== 'Available') {
+                chargingStation.classList.add('unavailable');
+            }
 
             // Create content of each charging station
             address.textContent = streetName[0];
