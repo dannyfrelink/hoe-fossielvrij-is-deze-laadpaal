@@ -1,4 +1,4 @@
-# Sustainable Charging
+# 🌳 Sustainable Charging
 
 Charge your electric vehicle more sustainable by using Sustainable Charge. A web application which helps you find all charging stations in your area. Browse through the options and choose your best time and station to charge your vehicle.
 
@@ -14,13 +14,13 @@ Charge your electric vehicle more sustainable by using Sustainable Charge. A web
 - [Installation](https://github.com/dannyfrelink/sustainable-charging#-installation)
 - [License](https://github.com/dannyfrelink/sustainable-charging#-license)
 
-## Motive
+## 💭 Motive
 
 The Netherlands is rapidly switching to electric driving. But electricity is not yet fossil-free. And when you charge your electric car, you emit CO2. How much CO2 is released depends on where, when and of course how much energy (kWh) you charge. So how do you know how much CO2 is released when you plug your electric car into a specific charging station?
 
 The Green Caravan has developed a data model that combines energy generation and trade across Europe with energy mixes from energy providers. For example, you can accurately request how much CO2, solar, wind, hydro, nuclear, coal, gas and more is in a charging session right down to the charging station. Green Caravan not only has historical data, but also forecasts for the near future.
 
-## Assignment
+## 📨 Assignment
 
 Create a web application that gives insight into the usage of fossil fuels for charging sessions of electric cars.
 
@@ -36,7 +36,7 @@ As an electric driver, I would like to know at which charging station I can char
 3. Finding the best charging moment at a charging station
 As an electric driver, I would like to know when the least fossil electricity comes from my charging station, so that I can charge my car as sustainable as possible.
 
-## Concept
+## 💡 Concept
 
 All the user stories above are kind of similar. Therefore, I wanted to try and target as many as possible to make a complete web application. The client wanted to see as many different prototypes as possible to get the most ideas for the future. Most of my fellow students were creating some sort of a map, so I tried to stay clear of that option. 
 
@@ -58,7 +58,7 @@ Landing page        |  Best times
 :------------------:|:------------------:
 ![Landing page](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-landing-page.png) | ![Best times](https://github.com/dannyfrelink/sustainable-charging/blob/main/public/images/readme/concept-best-times.png)
 
-## API
+## 💻 API
 
 The client provided us with multiple API's we could use. I decided I wanted to try and connect multiple API's with each other to create the most complete dataset. I also found an API which I wanted to use myself. Here are all the API's I decided to use for my application.
 
