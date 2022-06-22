@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5151;
+const compression = require('compression')
 require('dotenv').config();
 const http = require('http');
 const server = http.createServer(app);
@@ -16,6 +17,7 @@ const INFLUXDB_KEY = 'QvDOolmSU478M5YkeD17nVeFb4FA_ngo-P0LNokCe6dS2Y10hxIa1zoQ1Z
 const client = new InfluxDB({ url: INFLUXDB_URL, token: INFLUXDB_KEY });
 const queryApi = client.getQueryApi(INFLUXDB_ORG);
 
+app.use(compression());
 app.use(express.static('static'));
 app.set('view engine', 'ejs');
 
