@@ -1,5 +1,7 @@
 # Sustainable Charging
 
+Charge your electric vehicle more sustainable by using Sustainable Charge. A web application which helps you find all charging stations in your area. Browse through the options and choose your best time and station to charge your vehicle.
+
 ## 📋 Table of Contents
 
 - [Motive](https://github.com/dannyfrelink/sustainable-charging#motive)
