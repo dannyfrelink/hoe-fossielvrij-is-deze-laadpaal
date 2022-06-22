@@ -1,5 +1,3 @@
-// import { socket, chargingStations, loaderSection, loaderText, sortInputsAvailability, sortInputs, results, rangeInput } from './variables.js';
-
 let resultsAmount = 0;
 
 socket.on('fill-in-data', (stationsBySupplier, stationsByDistance) => {

@@ -12,5 +12,3 @@ const errorMessage = document.querySelector('#error_message');
 const chargingStations = document.querySelector('#charging_stations');
 const loaderSection = document.querySelector('#loader');
 const loaderText = document.querySelector('#loader_text');
-
-// export { socket, results, openTimes, openFilters, filters, times, rangeInput, numberInput, sortInputsAvailability, sortInputs, errorMessage, chargingStations, loaderSection, loaderText }

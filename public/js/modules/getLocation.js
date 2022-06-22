@@ -1,5 +1,3 @@
-// import { socket, errorMessage } from './variables.js';
-
 const getLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);

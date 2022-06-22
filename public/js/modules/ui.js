@@ -1,6 +1,3 @@
-// import { openFilters, openTimes, filters, times, rangeInput, numberInput } from "./variables.js";
-
-
 const addEventListeners = () => {
     openFilters.addEventListener('click', () => {
         openFilters.classList.toggle('active');
