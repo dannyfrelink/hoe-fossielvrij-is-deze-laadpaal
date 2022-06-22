@@ -5,7 +5,7 @@ Charge your electric vehicle more sustainable by using Sustainable Charge. A web
 ## 📋 Table of Contents
 
 - [💭 Motive](https://github.com/dannyfrelink/sustainable-charging#motive)
-- [📨 Assignment](https://github.com/dannyfrelink/sustainable-charging#assignment)
+- [🔑 Assignment](https://github.com/dannyfrelink/sustainable-charging#assignment)
     * [User Stories](https://github.com/dannyfrelink/sustainable-charging#user-stories)
 - [💡 Concept](https://github.com/dannyfrelink/sustainable-charging#concept)
 - [💻 API](https://github.com/dannyfrelink/sustainable-charging#api)
@@ -20,7 +20,7 @@ The Netherlands is rapidly switching to electric driving. But electricity is not
 
 The Green Caravan has developed a data model that combines energy generation and trade across Europe with energy mixes from energy providers. For example, you can accurately request how much CO2, solar, wind, hydro, nuclear, coal, gas and more is in a charging session right down to the charging station. Green Caravan not only has historical data, but also forecasts for the near future.
 
-## 📨 Assignment
+## 🔑 Assignment
 
 Create a web application that gives insight into the usage of fossil fuels for charging sessions of electric cars.
 
