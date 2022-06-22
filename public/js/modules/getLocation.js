@@ -1,6 +1,6 @@
-import { socket, errorMessage } from './variables.js';
+// import { socket, errorMessage } from './variables.js';
 
-export const getLocation = () => {
+const getLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {

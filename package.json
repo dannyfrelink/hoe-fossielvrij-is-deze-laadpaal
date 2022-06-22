@@ -6,6 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "build": "npm-run-all build:*",
+    "build:css": "node build_scripts/build-css.js",
+    "build:js": "node build_scripts/build-js.js",
+    "build:assets": "node build_scripts/build-assets.js",
+    "watch": "run-p watch:*",
+    "watch:css": "chokidar 'src/css/*.css' --command 'npm run build:css'",
+    "watch:js": "chokidar 'src/js/**/*.js' --command 'npm run build:js'",
+    "watch:assets": "chokidar 'src/**/*.*' --command 'npm run build:assets'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,6 +36,13 @@
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "chokidar-cli": "^3.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2",
+    "npm-run-all": "^4.1.5"
   }
 }

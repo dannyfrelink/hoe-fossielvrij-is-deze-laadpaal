@@ -37,7 +37,7 @@ body {
     top: 4.5rem;
     bottom: 0;
     content: '';
-    background-image: url('/images/electric-car2.png');
+    background-image: url('/electric-car2.png');
     background-size: 100%;
     background-repeat: no-repeat;
     opacity: 0.2;
@@ -300,12 +300,12 @@ article>button {
 
 .bad_sustainability::after {
     background-color: red;
-    background-image: url('/images/factory-icon.png');
+    background-image: url('/factory-icon.png');
 }
 
 .good_sustainability::after {
     background-color: green;
-    background-image: url('/images/tree-icon.png');
+    background-image: url('/tree-icon.png');
 }
 
 #extra_info_container {

@@ -16,7 +16,7 @@ const INFLUXDB_KEY = 'QvDOolmSU478M5YkeD17nVeFb4FA_ngo-P0LNokCe6dS2Y10hxIa1zoQ1Z
 const client = new InfluxDB({ url: INFLUXDB_URL, token: INFLUXDB_KEY });
 const queryApi = client.getQueryApi(INFLUXDB_ORG);
 
-app.use(express.static('public'));
+app.use(express.static('static'));
 app.set('view engine', 'ejs');
 
 let users = {};

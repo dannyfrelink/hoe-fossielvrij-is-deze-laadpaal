@@ -1,4 +1,4 @@
-import { socket, chargingStations, loaderSection, loaderText, sortInputsAvailability, sortInputs, results, rangeInput } from './variables.js';
+// import { socket, chargingStations, loaderSection, loaderText, sortInputsAvailability, sortInputs, results, rangeInput } from './variables.js';
 
 let resultsAmount = 0;
 
