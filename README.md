@@ -4,7 +4,7 @@
 
 - [Motive]()
 - [Assignment]()
-+ [User Stories]()
+    * [User Stories]()
 - [Concept]()
 - [API]()
 - [Process (Wiki)]()
