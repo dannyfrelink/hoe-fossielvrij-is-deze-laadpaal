@@ -3,11 +3,11 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
 gulp.src([
-    './public/js/modules/variables.js',
-    './public/js/modules/getLocation.js',
-    './public/js/modules/fillInData.js',
-    './public/js/modules/ui.js',
-    './public/js/script.js'
+    './babel_js/js/modules/variables.js',
+    './babel_js/js/modules/getLocation.js',
+    './babel_js/js/modules/fillInData.js',
+    './babel_js/js/modules/ui.js',
+    './babel_js/js/script.js'
 ])
     .pipe(uglify())
     .pipe(concat('script.js'))

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build": "npm-run-all build:*",
+    "build": "babel public/ -d babel_js && npm-run-all build:*",
     "build:css": "node build_scripts/build-css.js",
     "build:js": "node build_scripts/build-js.js",
     "build:assets": "node build_scripts/build-assets.js",
@@ -37,6 +37,8 @@
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "chokidar-cli": "^3.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
