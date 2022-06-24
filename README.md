@@ -6,7 +6,7 @@ Charge your electric vehicle more sustainable by using Sustainable Charge. A web
 
 - [💭 Motive](https://github.com/dannyfrelink/sustainable-charging#motive)
 - [🔑 Assignment](https://github.com/dannyfrelink/sustainable-charging#assignment)
-    * [User Stories](https://github.com/dannyfrelink/sustainable-charging#user-stories)
+    * [👥 User Stories](https://github.com/dannyfrelink/sustainable-charging#user-stories)
 - [💡 Concept](https://github.com/dannyfrelink/sustainable-charging#concept)
 - [💻 API](https://github.com/dannyfrelink/sustainable-charging#api)
 - [⚙️ Process (Wiki)](https://github.com/dannyfrelink/sustainable-charging#%EF%B8%8F-process-wiki)
@@ -24,7 +24,7 @@ The Green Caravan has developed a data model that combines energy generation and
 
 Create a web application that gives insight into the usage of fossil fuels for charging sessions of electric cars.
 
-### User Stories
+### 👥 User Stories
 
 1. Fossil electricity from charging station?
 As an electric driver, I want to know how much fossil electricity comes from the charging station I am standing next to, so that I know how (un)sustainable it is.
